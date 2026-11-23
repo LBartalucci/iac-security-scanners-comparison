@@ -1,0 +1,281 @@
+[
+  {
+    "id": "ST-01",
+    "type": "vulnerable",
+    "category": "public-storage",
+    "expected_issue": "public S3 bucket access via ACL",
+    "expected_checkov_id": ["CKV_AWS_20", "CKV2_AWS_6"],
+    "expected_kics_id": ["38c5ee0d-7f22-4260-ab72-5073048df100"],
+    "structural_pattern": "explicit_misconfigured_attribute_and_missing_companion",
+    "risk_profile": {
+      "asset": "aws_s3_bucket.st01 / aws_s3_bucket_acl.st01",
+      "exposure_vector": "Public internet read access through S3 ACL (public-read)",
+      "cia_impact": "Confidentiality (High)",
+      "remediation": "Remove public ACL and add aws_s3_bucket_public_access_block with all four flags set to true"
+    }
+  },
+  {
+    "id": "ST-02",
+    "type": "vulnerable",
+    "category": "public-storage",
+    "expected_issue": "disabled S3 public-access protection",
+    "expected_checkov_id": ["CKV_AWS_53", "CKV_AWS_54", "CKV_AWS_55", "CKV_AWS_56", "CKV2_AWS_6"],
+    "expected_kics_id": ["1a4bc881-9f69-4d44-8c9a-d37d08f54c50", "4fa66806-0dd9-4f8d-9480-3174d39c7c91", "d0cc8694-fcad-43ff-ac86-32331d7e867f"],
+    "structural_pattern": "explicit_misconfigured_attribute",
+    "risk_profile": {
+      "asset": "aws_s3_bucket_public_access_block.st02",
+      "exposure_vector": "Disabled public access block allows future public ACLs or policies to expose bucket objects",
+      "cia_impact": "Confidentiality (Medium-High)",
+      "remediation": "Set block_public_acls, block_public_policy, ignore_public_acls, and restrict_public_buckets to true"
+    }
+  },
+  {
+    "id": "ST-03",
+    "type": "vulnerable",
+    "category": "public-storage",
+    "expected_issue": "public S3 bucket policy (Principal: *)",
+    "expected_checkov_id": ["CKV_AWS_70", "CKV2_AWS_6"],
+    "expected_kics_id": ["7af43613-6bb9-4a0e-8c4d-1314b799425e", "1df37f4b-7197-45ce-83f8-9994d2fcf885"],
+    "structural_pattern": "iam_policy_json_wildcard",
+    "risk_profile": {
+      "asset": "aws_s3_bucket_policy.st03",
+      "exposure_vector": "Anonymous object read access via wildcard Principal (*) on s3:GetObject",
+      "cia_impact": "Confidentiality (Critical)",
+      "remediation": "Remove wildcard principal from bucket policy and enable bucket public access block"
+    }
+  },
+  {
+    "id": "EN-01",
+    "type": "vulnerable",
+    "category": "encryption-at-rest",
+    "expected_issue": "missing S3 server-side encryption configuration",
+    "expected_checkov_id": ["CKV_AWS_145"],
+    "expected_kics_id": [],
+    "structural_pattern": "missing_companion_resource",
+    "disagreement_reason": "Checkov flags the bucket with CKV_AWS_145 (which requires explicit aws:kms encryption on every aws_s3_bucket and fires whenever KMS encryption is absent); KICS does not flag an aws_s3_bucket that omits the separate server-side encryption resource.",
+    "risk_profile": {
+      "asset": "aws_s3_bucket.en01",
+      "exposure_vector": "No explicit server-side encryption configuration defined in Terraform",
+      "cia_impact": "Confidentiality (Medium)",
+      "remediation": "Add an aws_s3_bucket_server_side_encryption_configuration resource"
+    }
+  },
+  {
+    "id": "EN-02",
+    "type": "vulnerable",
+    "category": "encryption-at-rest",
+    "expected_issue": "unencrypted EBS volume (encrypted = false)",
+    "expected_checkov_id": ["CKV_AWS_3"],
+    "expected_kics_id": ["cc997676-481b-4e93-aa81-d19f8c5e9b12"],
+    "structural_pattern": "explicit_misconfigured_attribute",
+    "risk_profile": {
+      "asset": "aws_ebs_volume.en02",
+      "exposure_vector": "Unencrypted block storage volume and snapshots",
+      "cia_impact": "Confidentiality (High)",
+      "remediation": "Set encrypted = true on aws_ebs_volume"
+    }
+  },
+  {
+    "id": "ID-01",
+    "type": "vulnerable",
+    "category": "identity-permissions",
+    "expected_issue": "wildcard IAM administrative permissions (Action: *, Resource: *)",
+    "expected_checkov_id": ["CKV_AWS_62", "CKV_AWS_63", "CKV_AWS_286", "CKV_AWS_287", "CKV_AWS_288", "CKV_AWS_289", "CKV_AWS_290", "CKV_AWS_355", "CKV2_AWS_40"],
+    "expected_kics_id": ["2f37c4a3-58b9-4afe-8a87-d7f1d2286f84", "575a2155-6af1-4026-b1af-d5bc8fe2a904", "ba2ed23b-52d3-45ca-be25-f6c358d45abd"],
+    "structural_pattern": "iam_policy_json_wildcard",
+    "risk_profile": {
+      "asset": "aws_iam_policy.id01",
+      "exposure_vector": "Full administrative permissions across all actions and resources in the AWS account",
+      "cia_impact": "Confidentiality, Integrity, Availability (Critical)",
+      "remediation": "Restrict Action to required operations (e.g., s3:GetObject) and Resource to specific ARNs"
+    }
+  },
+  {
+    "id": "ID-02",
+    "type": "vulnerable",
+    "category": "identity-permissions",
+    "expected_issue": "unrestricted iam:PassRole on all resources (*)",
+    "expected_checkov_id": ["CKV_AWS_289", "CKV_AWS_355"],
+    "expected_kics_id": [],
+    "structural_pattern": "iam_action_specific_escalation",
+    "disagreement_reason": "Checkov flags standalone aws_iam_policy resources granting iam:PassRole on Resource '*' via its permissions-management (CKV_AWS_289) and restrictable-wildcard-resource (CKV_AWS_355) checks; KICS's PassRole queries target inline role policies or attached identity policies rather than a standalone unattached aws_iam_policy.",
+    "risk_profile": {
+      "asset": "aws_iam_policy.id02",
+      "exposure_vector": "Privilege escalation by passing an existing high-privilege IAM role to a compute service",
+      "cia_impact": "Confidentiality, Integrity (High)",
+      "remediation": "Restrict iam:PassRole Resource to a specific IAM role ARN"
+    }
+  },
+  {
+    "id": "NW-01",
+    "type": "vulnerable",
+    "category": "network-exposure",
+    "expected_issue": "SSH (TCP port 22) open to 0.0.0.0/0",
+    "expected_checkov_id": ["CKV_AWS_24"],
+    "expected_kics_id": ["65905cec-d691-4320-b320-2000436cb696", "381c3f2a-ef6f-4eff-99f7-b169cda3422c", "4728cd65-a20c-49da-8b31-9c08b423e4db"],
+    "structural_pattern": "explicit_port_cidr_exposure",
+    "risk_profile": {
+      "asset": "aws_security_group.nw01",
+      "exposure_vector": "Public internet access to SSH (port 22) enabling brute-force or remote exploit attempts",
+      "cia_impact": "Confidentiality, Integrity, Availability (High)",
+      "remediation": "Restrict ingress cidr_blocks to private network ranges (e.g., 10.0.0.0/8)"
+    }
+  },
+  {
+    "id": "NW-02",
+    "type": "vulnerable",
+    "category": "network-exposure",
+    "expected_issue": "RDP (TCP port 3389) open to 0.0.0.0/0",
+    "expected_checkov_id": ["CKV_AWS_25"],
+    "expected_kics_id": ["151187cb-0efc-481c-babd-ad24e3c9bc22", "381c3f2a-ef6f-4eff-99f7-b169cda3422c", "4728cd65-a20c-49da-8b31-9c08b423e4db"],
+    "structural_pattern": "explicit_port_cidr_exposure",
+    "risk_profile": {
+      "asset": "aws_security_group.nw02",
+      "exposure_vector": "Public internet access to RDP (port 3389) enabling credential attacks or service exploitation",
+      "cia_impact": "Confidentiality, Integrity, Availability (High)",
+      "remediation": "Restrict ingress cidr_blocks to private network ranges (e.g., 10.0.0.0/8)"
+    }
+  },
+  {
+    "id": "NW-03",
+    "type": "vulnerable",
+    "category": "network-exposure",
+    "expected_issue": "all ports and protocols open to 0.0.0.0/0",
+    "expected_checkov_id": ["CKV_AWS_24", "CKV_AWS_25", "CKV_AWS_260", "CKV_AWS_277"],
+    "expected_kics_id": ["151187cb-0efc-481c-babd-ad24e3c9bc22", "381c3f2a-ef6f-4eff-99f7-b169cda3422c", "4728cd65-a20c-49da-8b31-9c08b423e4db", "65905cec-d691-4320-b320-2000436cb696"],
+    "structural_pattern": "wildcard_protocol_port_range",
+    "risk_profile": {
+      "asset": "aws_security_group.nw03",
+      "exposure_vector": "All ports and protocols exposed to 0.0.0.0/0",
+      "cia_impact": "Confidentiality, Integrity, Availability (Critical)",
+      "remediation": "Set protocol to tcp, restrict port to 443, and limit cidr_blocks to 10.0.0.0/8"
+    }
+  },
+  {
+    "id": "ST-01",
+    "type": "corrected",
+    "category": "public-storage",
+    "expected_issue": "no public-access finding",
+    "expected_checkov_id": ["CKV_AWS_20", "CKV2_AWS_6"],
+    "expected_kics_id": ["38c5ee0d-7f22-4260-ab72-5073048df100"],
+    "structural_pattern": "remediated_companion_block"
+  },
+  {
+    "id": "ST-02",
+    "type": "corrected",
+    "category": "public-storage",
+    "expected_issue": "no public-access finding",
+    "expected_checkov_id": ["CKV_AWS_53", "CKV_AWS_54", "CKV_AWS_55", "CKV_AWS_56", "CKV2_AWS_6"],
+    "expected_kics_id": ["1a4bc881-9f69-4d44-8c9a-d37d08f54c50", "4fa66806-0dd9-4f8d-9480-3174d39c7c91", "d0cc8694-fcad-43ff-ac86-32331d7e867f"],
+    "structural_pattern": "remediated_attribute"
+  },
+  {
+    "id": "ST-03",
+    "type": "corrected",
+    "category": "public-storage",
+    "expected_issue": "no public-access finding",
+    "expected_checkov_id": ["CKV_AWS_70", "CKV2_AWS_6"],
+    "expected_kics_id": ["7af43613-6bb9-4a0e-8c4d-1314b799425e", "1df37f4b-7197-45ce-83f8-9994d2fcf885"],
+    "structural_pattern": "remediated_policy_removal_and_block"
+  },
+  {
+    "id": "EN-01",
+    "type": "corrected",
+    "category": "encryption-at-rest",
+    "expected_issue": "no missing-encryption finding (encrypted with AES256)",
+    "expected_checkov_id": ["CKV_AWS_145"],
+    "expected_kics_id": [],
+    "structural_pattern": "remediated_aes256_companion_resource",
+    "disagreement_reason": "Checkov reports a False Positive on EN-01-fixed.tf because rule CKV_AWS_145 requires KMS encryption (aws:kms) and does not accept standard AES256 server-side encryption."
+  },
+  {
+    "id": "EN-02",
+    "type": "corrected",
+    "category": "encryption-at-rest",
+    "expected_issue": "no missing-encryption finding",
+    "expected_checkov_id": ["CKV_AWS_3"],
+    "expected_kics_id": ["cc997676-481b-4e93-aa81-d19f8c5e9b12"],
+    "structural_pattern": "remediated_attribute"
+  },
+  {
+    "id": "ID-01",
+    "type": "corrected",
+    "category": "identity-permissions",
+    "expected_issue": "no excessive-permission finding",
+    "expected_checkov_id": ["CKV_AWS_62", "CKV_AWS_63", "CKV_AWS_286", "CKV_AWS_287", "CKV_AWS_288", "CKV_AWS_289", "CKV_AWS_290", "CKV_AWS_355", "CKV2_AWS_40"],
+    "expected_kics_id": ["2f37c4a3-58b9-4afe-8a87-d7f1d2286f84", "575a2155-6af1-4026-b1af-d5bc8fe2a904", "ba2ed23b-52d3-45ca-be25-f6c358d45abd"],
+    "structural_pattern": "remediated_least_privilege_policy"
+  },
+  {
+    "id": "ID-02",
+    "type": "corrected",
+    "category": "identity-permissions",
+    "expected_issue": "no excessive-permission finding",
+    "expected_checkov_id": ["CKV_AWS_289", "CKV_AWS_355"],
+    "expected_kics_id": [],
+    "structural_pattern": "remediated_scoped_passrole"
+  },
+  {
+    "id": "NW-01",
+    "type": "corrected",
+    "category": "network-exposure",
+    "expected_issue": "no unrestricted-ingress finding",
+    "expected_checkov_id": ["CKV_AWS_24"],
+    "expected_kics_id": ["65905cec-d691-4320-b320-2000436cb696", "381c3f2a-ef6f-4eff-99f7-b169cda3422c", "4728cd65-a20c-49da-8b31-9c08b423e4db"],
+    "structural_pattern": "remediated_private_cidr"
+  },
+  {
+    "id": "NW-02",
+    "type": "corrected",
+    "category": "network-exposure",
+    "expected_issue": "no unrestricted-ingress finding",
+    "expected_checkov_id": ["CKV_AWS_25"],
+    "expected_kics_id": ["151187cb-0efc-481c-babd-ad24e3c9bc22", "381c3f2a-ef6f-4eff-99f7-b169cda3422c", "4728cd65-a20c-49da-8b31-9c08b423e4db"],
+    "structural_pattern": "remediated_private_cidr"
+  },
+  {
+    "id": "NW-03",
+    "type": "corrected",
+    "category": "network-exposure",
+    "expected_issue": "no unrestricted-ingress finding",
+    "expected_checkov_id": ["CKV_AWS_24", "CKV_AWS_25", "CKV_AWS_260", "CKV_AWS_277"],
+    "expected_kics_id": ["151187cb-0efc-481c-babd-ad24e3c9bc22", "381c3f2a-ef6f-4eff-99f7-b169cda3422c", "4728cd65-a20c-49da-8b31-9c08b423e4db", "65905cec-d691-4320-b320-2000436cb696"],
+    "structural_pattern": "remediated_port_and_private_cidr"
+  },
+  {
+    "id": "BC-01",
+    "type": "benign",
+    "category": "public-storage",
+    "expected_issue": "no public-storage finding on benign control",
+    "expected_checkov_id": ["CKV_AWS_20", "CKV_AWS_53", "CKV_AWS_54", "CKV_AWS_55", "CKV_AWS_56", "CKV_AWS_70", "CKV2_AWS_6"],
+    "expected_kics_id": ["38c5ee0d-7f22-4260-ab72-5073048df100", "1a4bc881-9f69-4d44-8c9a-d37d08f54c50", "4fa66806-0dd9-4f8d-9480-3174d39c7c91", "d0cc8694-fcad-43ff-ac86-32331d7e867f", "7af43613-6bb9-4a0e-8c4d-1314b799425e", "1df37f4b-7197-45ce-83f8-9994d2fcf885"],
+    "structural_pattern": "benign_control_baseline"
+  },
+  {
+    "id": "BC-02",
+    "type": "benign",
+    "category": "encryption-at-rest",
+    "expected_issue": "no missing-encryption finding on benign control",
+    "expected_checkov_id": ["CKV_AWS_3"],
+    "expected_kics_id": ["cc997676-481b-4e93-aa81-d19f8c5e9b12"],
+    "structural_pattern": "benign_control_baseline"
+  },
+  {
+    "id": "BC-03",
+    "type": "benign",
+    "category": "identity-permissions",
+    "expected_issue": "no excessive-permission finding on benign control",
+    "expected_checkov_id": ["CKV_AWS_62", "CKV_AWS_63", "CKV_AWS_286", "CKV_AWS_287", "CKV_AWS_288", "CKV_AWS_289", "CKV_AWS_290", "CKV_AWS_355", "CKV2_AWS_40"],
+    "expected_kics_id": ["2f37c4a3-58b9-4afe-8a87-d7f1d2286f84", "575a2155-6af1-4026-b1af-d5bc8fe2a904", "ba2ed23b-52d3-45ca-be25-f6c358d45abd"],
+    "structural_pattern": "benign_control_baseline"
+  },
+  {
+    "id": "BC-04",
+    "type": "benign",
+    "category": "network-exposure",
+    "expected_issue": "no unrestricted-ingress finding on benign control",
+    "expected_checkov_id": ["CKV_AWS_24", "CKV_AWS_25", "CKV_AWS_260", "CKV_AWS_277"],
+    "expected_kics_id": ["151187cb-0efc-481c-babd-ad24e3c9bc22", "381c3f2a-ef6f-4eff-99f7-b169cda3422c", "4728cd65-a20c-49da-8b31-9c08b423e4db", "65905cec-d691-4320-b320-2000436cb696"],
+    "structural_pattern": "benign_control_baseline"
+  }
+]
