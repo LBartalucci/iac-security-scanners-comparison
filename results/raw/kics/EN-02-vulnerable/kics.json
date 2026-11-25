@@ -1,0 +1,119 @@
+{
+  "kics_version": "v2.2.1",
+  "files_scanned": 1,
+  "lines_scanned": 6,
+  "files_parsed": 1,
+  "lines_parsed": 6,
+  "lines_ignored": 0,
+  "files_failed_to_scan": 0,
+  "queries_total": 1101,
+  "queries_failed_to_execute": 0,
+  "queries_failed_to_compute_similarity_id": 0,
+  "scan_id": "console",
+  "severity_counters": {
+    "CRITICAL": 0,
+    "HIGH": 1,
+    "INFO": 1,
+    "LOW": 1,
+    "MEDIUM": 0,
+    "TRACE": 0
+  },
+  "total_counter": 3,
+  "total_bom_resources": 0,
+  "start": "2026-11-22T18:47:29.394179122Z",
+  "end": "2026-11-22T18:47:35.373002417Z",
+  "paths": [
+    "benchmark/cases/EN-02-vulnerable.tf"
+  ],
+  "queries": [
+    {
+      "query_name": "EBS Volume Encryption Disabled",
+      "query_id": "cc997676-481b-4e93-aa81-d19f8c5e9b12",
+      "query_url": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ebs_volume#encrypted",
+      "severity": "HIGH",
+      "platform": "Terraform",
+      "cwe": "311",
+      "risk_score": "7.1",
+      "cloud_provider": "AWS",
+      "category": "Encryption",
+      "experimental": false,
+      "description": "EBS volumes should be encrypted",
+      "description_id": "977695a1",
+      "files": [
+        {
+          "file_name": "benchmark/cases/EN-02-vulnerable.tf",
+          "similarity_id": "54c882ad2812c079d8d263092d7907c4024a894ae19e8dea0ecdb0d5a7d34b3a",
+          "line": 4,
+          "resource_type": "aws_ebs_volume",
+          "resource_name": "en02",
+          "issue_type": "IncorrectValue",
+          "search_key": "aws_ebs_volume[en02].encrypted",
+          "search_line": 4,
+          "search_value": "",
+          "expected_value": "One of 'aws_ebs_volume.encrypted' should be 'true'",
+          "actual_value": "One of 'aws_ebs_volume.encrypted' is 'false'",
+          "remediation": "{\"after\":\"true\",\"before\":\"false\"}",
+          "remediation_type": "replacement"
+        }
+      ]
+    },
+    {
+      "query_name": "IAM Access Analyzer Not Enabled",
+      "query_id": "e592a0c5-5bdb-414c-9066-5dba7cdea370",
+      "query_url": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/accessanalyzer_analyzer",
+      "severity": "LOW",
+      "platform": "Terraform",
+      "cwe": "710",
+      "risk_score": "3.5",
+      "cloud_provider": "AWS",
+      "category": "Best Practices",
+      "experimental": false,
+      "description": "IAM Access Analyzer should be enabled and configured to continuously monitor resource permissions",
+      "description_id": "d03e85ae",
+      "files": [
+        {
+          "file_name": "benchmark/cases/EN-02-vulnerable.tf",
+          "similarity_id": "aa346cd1642a83b40e221f96a43d88dbfacecdf1f8e5314c24145f8d35530197",
+          "line": 1,
+          "resource_type": "n/a",
+          "resource_name": "n/a",
+          "issue_type": "MissingAttribute",
+          "search_key": "resource",
+          "search_line": -1,
+          "search_value": "",
+          "expected_value": "'aws_accessanalyzer_analyzer' should be set",
+          "actual_value": "'aws_accessanalyzer_analyzer' is undefined"
+        }
+      ]
+    },
+    {
+      "query_name": "Resource Not Using Tags",
+      "query_id": "e38a8e0a-b88b-4902-b3fe-b0fcb17d5c10",
+      "query_url": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/guides/resource-tagging",
+      "severity": "INFO",
+      "platform": "Terraform",
+      "cwe": "665",
+      "risk_score": "0.0",
+      "cloud_provider": "AWS",
+      "category": "Best Practices",
+      "experimental": false,
+      "description": "AWS services resource tags are an essential part of managing components. As a best practice, the field 'tags' should have additional tags defined other than 'Name'",
+      "description_id": "09db2d52",
+      "files": [
+        {
+          "file_name": "benchmark/cases/EN-02-vulnerable.tf",
+          "similarity_id": "b12417fbe96332f714eafe67c0c50f9d73eeeafdeb257d804e905d105f65cd17",
+          "line": 1,
+          "resource_type": "aws_ebs_volume",
+          "resource_name": "en02",
+          "issue_type": "MissingAttribute",
+          "search_key": "aws_ebs_volume[{{en02}}]",
+          "search_line": -1,
+          "search_value": "",
+          "expected_value": "aws_ebs_volume[{{en02}}].tags should be defined and not null",
+          "actual_value": "aws_ebs_volume[{{en02}}].tags is undefined or null"
+        }
+      ]
+    }
+  ]
+}

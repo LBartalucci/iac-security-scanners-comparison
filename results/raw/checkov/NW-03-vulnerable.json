@@ -1,0 +1,532 @@
+{
+    "check_type": "terraform",
+    "results": {
+        "failed_checks": [
+            {
+                "check_id": "CKV_AWS_277",
+                "bc_check_id": "BC_AWS_NETWORKING_78",
+                "check_name": "Ensure no security groups allow ingress from 0.0.0.0:0 to port -1",
+                "check_result": {
+                    "result": "FAILED",
+                    "evaluated_keys": [
+                        "ingress/[0]/from_port",
+                        "ingress/[0]/to_port",
+                        "ingress/[0]/cidr_blocks",
+                        "ingress/[0]/ipv6_cidr_blocks"
+                    ]
+                },
+                "code_block": [
+                    [
+                        1,
+                        "resource \"aws_security_group\" \"nw03\" {\n"
+                    ],
+                    [
+                        2,
+                        "  name = \"ict-risk-nw03-all-ports-open\"\n"
+                    ],
+                    [
+                        3,
+                        "\n"
+                    ],
+                    [
+                        4,
+                        "  ingress {\n"
+                    ],
+                    [
+                        5,
+                        "    from_port   = 0\n"
+                    ],
+                    [
+                        6,
+                        "    to_port     = 0\n"
+                    ],
+                    [
+                        7,
+                        "    protocol    = \"-1\"\n"
+                    ],
+                    [
+                        8,
+                        "    cidr_blocks = [\"0.0.0.0/0\"]\n"
+                    ],
+                    [
+                        9,
+                        "  }\n"
+                    ],
+                    [
+                        10,
+                        "}\n"
+                    ]
+                ],
+                "file_path": "/NW-03-vulnerable.tf",
+                "file_abs_path": "benchmark/cases/NW-03-vulnerable.tf",
+                "repo_file_path": "/benchmark/cases/NW-03-vulnerable.tf",
+                "file_line_range": [
+                    1,
+                    10
+                ],
+                "resource": "aws_security_group.nw03",
+                "evaluations": null,
+                "check_class": "checkov.terraform.checks.resource.aws.SecurityGroupUnrestrictedIngressAny",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-networking-policies/ensure-aws-security-group-does-not-allow-all-traffic-on-all-ports",
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": "benchmark/cases/NW-03-vulnerable.tf"
+            },
+            {
+                "check_id": "CKV_AWS_25",
+                "bc_check_id": "BC_AWS_NETWORKING_2",
+                "check_name": "Ensure no security groups allow ingress from 0.0.0.0:0 to port 3389",
+                "check_result": {
+                    "result": "FAILED",
+                    "evaluated_keys": [
+                        "ingress/[0]/from_port",
+                        "ingress/[0]/to_port",
+                        "ingress/[0]/cidr_blocks",
+                        "ingress/[0]/ipv6_cidr_blocks"
+                    ]
+                },
+                "code_block": [
+                    [
+                        1,
+                        "resource \"aws_security_group\" \"nw03\" {\n"
+                    ],
+                    [
+                        2,
+                        "  name = \"ict-risk-nw03-all-ports-open\"\n"
+                    ],
+                    [
+                        3,
+                        "\n"
+                    ],
+                    [
+                        4,
+                        "  ingress {\n"
+                    ],
+                    [
+                        5,
+                        "    from_port   = 0\n"
+                    ],
+                    [
+                        6,
+                        "    to_port     = 0\n"
+                    ],
+                    [
+                        7,
+                        "    protocol    = \"-1\"\n"
+                    ],
+                    [
+                        8,
+                        "    cidr_blocks = [\"0.0.0.0/0\"]\n"
+                    ],
+                    [
+                        9,
+                        "  }\n"
+                    ],
+                    [
+                        10,
+                        "}\n"
+                    ]
+                ],
+                "file_path": "/NW-03-vulnerable.tf",
+                "file_abs_path": "benchmark/cases/NW-03-vulnerable.tf",
+                "repo_file_path": "/benchmark/cases/NW-03-vulnerable.tf",
+                "file_line_range": [
+                    1,
+                    10
+                ],
+                "resource": "aws_security_group.nw03",
+                "evaluations": null,
+                "check_class": "checkov.terraform.checks.resource.aws.SecurityGroupUnrestrictedIngress3389",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-networking-policies/networking-2",
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": "benchmark/cases/NW-03-vulnerable.tf"
+            },
+            {
+                "check_id": "CKV_AWS_23",
+                "bc_check_id": "BC_AWS_NETWORKING_31",
+                "check_name": "Ensure every security group and rule has a description",
+                "check_result": {
+                    "result": "FAILED",
+                    "evaluated_keys": [
+                        "ingress/[0]"
+                    ]
+                },
+                "code_block": [
+                    [
+                        1,
+                        "resource \"aws_security_group\" \"nw03\" {\n"
+                    ],
+                    [
+                        2,
+                        "  name = \"ict-risk-nw03-all-ports-open\"\n"
+                    ],
+                    [
+                        3,
+                        "\n"
+                    ],
+                    [
+                        4,
+                        "  ingress {\n"
+                    ],
+                    [
+                        5,
+                        "    from_port   = 0\n"
+                    ],
+                    [
+                        6,
+                        "    to_port     = 0\n"
+                    ],
+                    [
+                        7,
+                        "    protocol    = \"-1\"\n"
+                    ],
+                    [
+                        8,
+                        "    cidr_blocks = [\"0.0.0.0/0\"]\n"
+                    ],
+                    [
+                        9,
+                        "  }\n"
+                    ],
+                    [
+                        10,
+                        "}\n"
+                    ]
+                ],
+                "file_path": "/NW-03-vulnerable.tf",
+                "file_abs_path": "benchmark/cases/NW-03-vulnerable.tf",
+                "repo_file_path": "/benchmark/cases/NW-03-vulnerable.tf",
+                "file_line_range": [
+                    1,
+                    10
+                ],
+                "resource": "aws_security_group.nw03",
+                "evaluations": null,
+                "check_class": "checkov.terraform.checks.resource.aws.SecurityGroupRuleDescription",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-networking-policies/networking-31",
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": "benchmark/cases/NW-03-vulnerable.tf"
+            },
+            {
+                "check_id": "CKV_AWS_24",
+                "bc_check_id": "BC_AWS_NETWORKING_1",
+                "check_name": "Ensure no security groups allow ingress from 0.0.0.0:0 to port 22",
+                "check_result": {
+                    "result": "FAILED",
+                    "evaluated_keys": [
+                        "ingress/[0]/from_port",
+                        "ingress/[0]/to_port",
+                        "ingress/[0]/cidr_blocks",
+                        "ingress/[0]/ipv6_cidr_blocks"
+                    ]
+                },
+                "code_block": [
+                    [
+                        1,
+                        "resource \"aws_security_group\" \"nw03\" {\n"
+                    ],
+                    [
+                        2,
+                        "  name = \"ict-risk-nw03-all-ports-open\"\n"
+                    ],
+                    [
+                        3,
+                        "\n"
+                    ],
+                    [
+                        4,
+                        "  ingress {\n"
+                    ],
+                    [
+                        5,
+                        "    from_port   = 0\n"
+                    ],
+                    [
+                        6,
+                        "    to_port     = 0\n"
+                    ],
+                    [
+                        7,
+                        "    protocol    = \"-1\"\n"
+                    ],
+                    [
+                        8,
+                        "    cidr_blocks = [\"0.0.0.0/0\"]\n"
+                    ],
+                    [
+                        9,
+                        "  }\n"
+                    ],
+                    [
+                        10,
+                        "}\n"
+                    ]
+                ],
+                "file_path": "/NW-03-vulnerable.tf",
+                "file_abs_path": "benchmark/cases/NW-03-vulnerable.tf",
+                "repo_file_path": "/benchmark/cases/NW-03-vulnerable.tf",
+                "file_line_range": [
+                    1,
+                    10
+                ],
+                "resource": "aws_security_group.nw03",
+                "evaluations": null,
+                "check_class": "checkov.terraform.checks.resource.aws.SecurityGroupUnrestrictedIngress22",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-networking-policies/networking-1-port-security",
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": "benchmark/cases/NW-03-vulnerable.tf"
+            },
+            {
+                "check_id": "CKV_AWS_260",
+                "bc_check_id": "BC_AWS_NETWORKING_67",
+                "check_name": "Ensure no security groups allow ingress from 0.0.0.0:0 to port 80",
+                "check_result": {
+                    "result": "FAILED",
+                    "evaluated_keys": [
+                        "ingress/[0]/from_port",
+                        "ingress/[0]/to_port",
+                        "ingress/[0]/cidr_blocks",
+                        "ingress/[0]/ipv6_cidr_blocks"
+                    ]
+                },
+                "code_block": [
+                    [
+                        1,
+                        "resource \"aws_security_group\" \"nw03\" {\n"
+                    ],
+                    [
+                        2,
+                        "  name = \"ict-risk-nw03-all-ports-open\"\n"
+                    ],
+                    [
+                        3,
+                        "\n"
+                    ],
+                    [
+                        4,
+                        "  ingress {\n"
+                    ],
+                    [
+                        5,
+                        "    from_port   = 0\n"
+                    ],
+                    [
+                        6,
+                        "    to_port     = 0\n"
+                    ],
+                    [
+                        7,
+                        "    protocol    = \"-1\"\n"
+                    ],
+                    [
+                        8,
+                        "    cidr_blocks = [\"0.0.0.0/0\"]\n"
+                    ],
+                    [
+                        9,
+                        "  }\n"
+                    ],
+                    [
+                        10,
+                        "}\n"
+                    ]
+                ],
+                "file_path": "/NW-03-vulnerable.tf",
+                "file_abs_path": "benchmark/cases/NW-03-vulnerable.tf",
+                "repo_file_path": "/benchmark/cases/NW-03-vulnerable.tf",
+                "file_line_range": [
+                    1,
+                    10
+                ],
+                "resource": "aws_security_group.nw03",
+                "evaluations": null,
+                "check_class": "checkov.terraform.checks.resource.aws.SecurityGroupUnrestrictedIngress80",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-networking-policies/ensure-aws-security-groups-do-not-allow-ingress-from-00000-to-port-80",
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": "benchmark/cases/NW-03-vulnerable.tf"
+            },
+            {
+                "check_id": "CKV2_AWS_5",
+                "bc_check_id": "BC_AWS_NETWORKING_51",
+                "check_name": "Ensure that Security Groups are attached to another resource",
+                "check_result": {
+                    "result": "FAILED",
+                    "entity": {
+                        "aws_security_group": {
+                            "nw03": {
+                                "__end_line__": 10,
+                                "__start_line__": 1,
+                                "ingress": [
+                                    {
+                                        "cidr_blocks": [
+                                            [
+                                                "0.0.0.0/0"
+                                            ]
+                                        ],
+                                        "from_port": [
+                                            0
+                                        ],
+                                        "protocol": [
+                                            "-1"
+                                        ],
+                                        "to_port": [
+                                            0
+                                        ]
+                                    }
+                                ],
+                                "name": [
+                                    "ict-risk-nw03-all-ports-open"
+                                ],
+                                "__address__": "aws_security_group.nw03"
+                            }
+                        }
+                    },
+                    "evaluated_keys": [
+                        "resource_type",
+                        "networking"
+                    ]
+                },
+                "code_block": [
+                    [
+                        1,
+                        "resource \"aws_security_group\" \"nw03\" {\n"
+                    ],
+                    [
+                        2,
+                        "  name = \"ict-risk-nw03-all-ports-open\"\n"
+                    ],
+                    [
+                        3,
+                        "\n"
+                    ],
+                    [
+                        4,
+                        "  ingress {\n"
+                    ],
+                    [
+                        5,
+                        "    from_port   = 0\n"
+                    ],
+                    [
+                        6,
+                        "    to_port     = 0\n"
+                    ],
+                    [
+                        7,
+                        "    protocol    = \"-1\"\n"
+                    ],
+                    [
+                        8,
+                        "    cidr_blocks = [\"0.0.0.0/0\"]\n"
+                    ],
+                    [
+                        9,
+                        "  }\n"
+                    ],
+                    [
+                        10,
+                        "}\n"
+                    ]
+                ],
+                "file_path": "/NW-03-vulnerable.tf",
+                "file_abs_path": "benchmark/cases/NW-03-vulnerable.tf",
+                "repo_file_path": "/benchmark/cases/NW-03-vulnerable.tf",
+                "file_line_range": [
+                    1,
+                    10
+                ],
+                "resource": "aws_security_group.nw03",
+                "evaluations": null,
+                "check_class": "checkov.common.graph.checks_infra.base_check",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-networking-policies/ensure-that-security-groups-are-attached-to-ec2-instances-or-elastic-network-interfaces-enis",
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": "benchmark/cases/NW-03-vulnerable.tf"
+            }
+        ]
+    },
+    "summary": {
+        "passed": 1,
+        "failed": 6,
+        "skipped": 0,
+        "parsing_errors": 0,
+        "resource_count": 1,
+        "checkov_version": "3.4.5"
+    }
+}

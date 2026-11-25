@@ -1,0 +1,74 @@
+{
+    "check_type": "terraform",
+    "results": {
+        "failed_checks": [
+            {
+                "check_id": "CKV_AWS_189",
+                "bc_check_id": "BC_AWS_GENERAL_109",
+                "check_name": "Ensure EBS Volume is encrypted by KMS using a customer managed Key (CMK)",
+                "check_result": {
+                    "result": "FAILED",
+                    "evaluated_keys": [
+                        "kms_key_id"
+                    ]
+                },
+                "code_block": [
+                    [
+                        1,
+                        "resource \"aws_ebs_volume\" \"bc02\" {\n"
+                    ],
+                    [
+                        2,
+                        "  availability_zone = \"eu-west-1a\"\n"
+                    ],
+                    [
+                        3,
+                        "  size              = 20\n"
+                    ],
+                    [
+                        4,
+                        "  encrypted         = true\n"
+                    ],
+                    [
+                        5,
+                        "}\n"
+                    ]
+                ],
+                "file_path": "/BC-02.tf",
+                "file_abs_path": "benchmark/cases/BC-02.tf",
+                "repo_file_path": "/benchmark/cases/BC-02.tf",
+                "file_line_range": [
+                    1,
+                    5
+                ],
+                "resource": "aws_ebs_volume.bc02",
+                "evaluations": null,
+                "check_class": "checkov.terraform.checks.resource.aws.EBSVolumeEncryptedWithCMK",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-general-policies/bc-aws-general-109",
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": "benchmark/cases/BC-02.tf"
+            }
+        ]
+    },
+    "summary": {
+        "passed": 2,
+        "failed": 1,
+        "skipped": 0,
+        "parsing_errors": 0,
+        "resource_count": 1,
+        "checkov_version": "3.4.5"
+    }
+}

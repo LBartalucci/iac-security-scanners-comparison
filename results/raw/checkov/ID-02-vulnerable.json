@@ -1,0 +1,189 @@
+{
+    "check_type": "terraform",
+    "results": {
+        "failed_checks": [
+            {
+                "check_id": "CKV_AWS_289",
+                "bc_check_id": "BC_AWS_IAM_84",
+                "check_name": "Ensure IAM policies does not allow permissions management / resource exposure without constraints",
+                "check_result": {
+                    "result": "FAILED",
+                    "evaluated_keys": [
+                        "policy/Statement/[0]/Action"
+                    ]
+                },
+                "code_block": [
+                    [
+                        1,
+                        "resource \"aws_iam_policy\" \"id02\" {\n"
+                    ],
+                    [
+                        2,
+                        "  name = \"ict-risk-id02-passrole\"\n"
+                    ],
+                    [
+                        3,
+                        "\n"
+                    ],
+                    [
+                        4,
+                        "  policy = jsonencode({\n"
+                    ],
+                    [
+                        5,
+                        "    Version = \"2012-10-17\"\n"
+                    ],
+                    [
+                        6,
+                        "    Statement = [{\n"
+                    ],
+                    [
+                        7,
+                        "      Effect   = \"Allow\"\n"
+                    ],
+                    [
+                        8,
+                        "      Action   = \"iam:PassRole\"\n"
+                    ],
+                    [
+                        9,
+                        "      Resource = \"*\"\n"
+                    ],
+                    [
+                        10,
+                        "    }]\n"
+                    ],
+                    [
+                        11,
+                        "  })\n"
+                    ],
+                    [
+                        12,
+                        "}\n"
+                    ]
+                ],
+                "file_path": "/ID-02-vulnerable.tf",
+                "file_abs_path": "benchmark/cases/ID-02-vulnerable.tf",
+                "repo_file_path": "/benchmark/cases/ID-02-vulnerable.tf",
+                "file_line_range": [
+                    1,
+                    12
+                ],
+                "resource": "aws_iam_policy.id02",
+                "evaluations": null,
+                "check_class": "checkov.terraform.checks.resource.aws.IAMPermissionsManagement",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-iam-policies/bc-aws-289",
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": "benchmark/cases/ID-02-vulnerable.tf"
+            },
+            {
+                "check_id": "CKV_AWS_355",
+                "bc_check_id": "BC_AWS_IAM_88",
+                "check_name": "Ensure no IAM policies documents allow \"*\" as a statement's resource for restrictable actions",
+                "check_result": {
+                    "result": "FAILED",
+                    "evaluated_keys": [
+                        "policy/Statement/[0]/Action"
+                    ]
+                },
+                "code_block": [
+                    [
+                        1,
+                        "resource \"aws_iam_policy\" \"id02\" {\n"
+                    ],
+                    [
+                        2,
+                        "  name = \"ict-risk-id02-passrole\"\n"
+                    ],
+                    [
+                        3,
+                        "\n"
+                    ],
+                    [
+                        4,
+                        "  policy = jsonencode({\n"
+                    ],
+                    [
+                        5,
+                        "    Version = \"2012-10-17\"\n"
+                    ],
+                    [
+                        6,
+                        "    Statement = [{\n"
+                    ],
+                    [
+                        7,
+                        "      Effect   = \"Allow\"\n"
+                    ],
+                    [
+                        8,
+                        "      Action   = \"iam:PassRole\"\n"
+                    ],
+                    [
+                        9,
+                        "      Resource = \"*\"\n"
+                    ],
+                    [
+                        10,
+                        "    }]\n"
+                    ],
+                    [
+                        11,
+                        "  })\n"
+                    ],
+                    [
+                        12,
+                        "}\n"
+                    ]
+                ],
+                "file_path": "/ID-02-vulnerable.tf",
+                "file_abs_path": "benchmark/cases/ID-02-vulnerable.tf",
+                "repo_file_path": "/benchmark/cases/ID-02-vulnerable.tf",
+                "file_line_range": [
+                    1,
+                    12
+                ],
+                "resource": "aws_iam_policy.id02",
+                "evaluations": null,
+                "check_class": "checkov.terraform.checks.resource.aws.IAMStarResourcePolicyDocument",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-iam-policies/bc-aws-355",
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": "benchmark/cases/ID-02-vulnerable.tf"
+            }
+        ]
+    },
+    "summary": {
+        "passed": 7,
+        "failed": 2,
+        "skipped": 0,
+        "parsing_errors": 0,
+        "resource_count": 1,
+        "checkov_version": "3.4.5"
+    }
+}

@@ -1,0 +1,7 @@
+{
+  "generated_at": "2026-11-22T18:51:09Z",
+  "cases_path": "benchmark/cases",
+  "terraform_files": 24,
+  "checkov_seconds_total": 276.299,
+  "kics_seconds_total": 189.335
+}
