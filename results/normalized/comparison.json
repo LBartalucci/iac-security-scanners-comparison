@@ -1,0 +1,2560 @@
+[
+  {
+    "Id": "ST-01",
+    "Type": "vulnerable",
+    "Category": "public-storage",
+    "File": "benchmark/cases/ST-01-vulnerable.tf",
+    "ExpectedIssue": "public S3 bucket access via ACL",
+    "StructuralPattern": "explicit_misconfigured_attribute_and_missing_companion",
+    "CheckovStatus": "detected",
+    "KicsStatus": "detected",
+    "CheckovTargetedRuleCount": 2,
+    "KicsTargetedRuleCount": 1,
+    "CheckovTargetedInstanceCount": 2,
+    "KicsTargetedInstanceCount": 1,
+    "CheckovTargetedFindings": [
+      {
+        "Name": "Ensure that S3 bucket has a Public Access block",
+        "Severity": null,
+        "CheckId": "CKV2_AWS_6",
+        "Resource": "aws_s3_bucket.st01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "S3 Bucket has an ACL defined which allows public READ access.",
+        "Severity": null,
+        "CheckId": "CKV_AWS_20",
+        "Resource": "aws_s3_bucket.st01",
+        "Occurrences": 1
+      }
+    ],
+    "KicsTargetedFindings": [
+      {
+        "Name": "S3 Bucket ACL Allows Read Or Write to All Users",
+        "Severity": "CRITICAL",
+        "CheckId": "38c5ee0d-7f22-4260-ab72-5073048df100",
+        "Resource": "aws_s3_bucket_acl.st01",
+        "Occurrences": 1
+      }
+    ],
+    "CheckovUniqueRuleCount": 8,
+    "KicsUniqueRuleCount": 5,
+    "CheckovAllFindingCount": 8,
+    "KicsAllFindingCount": 5,
+    "CheckovNonTargetFindingCount": 6,
+    "KicsNonTargetFindingCount": 4,
+    "CheckovAllFindings": [
+      {
+        "Name": "Ensure that S3 bucket has a Public Access block",
+        "Severity": null,
+        "CheckId": "CKV2_AWS_6",
+        "Resource": "aws_s3_bucket.st01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure that an S3 bucket has a lifecycle configuration",
+        "Severity": null,
+        "CheckId": "CKV2_AWS_61",
+        "Resource": "aws_s3_bucket.st01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure S3 buckets should have event notifications enabled",
+        "Severity": null,
+        "CheckId": "CKV2_AWS_62",
+        "Resource": "aws_s3_bucket.st01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure that S3 bucket has cross-region replication enabled",
+        "Severity": null,
+        "CheckId": "CKV_AWS_144",
+        "Resource": "aws_s3_bucket.st01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure that S3 buckets are encrypted with KMS by default",
+        "Severity": null,
+        "CheckId": "CKV_AWS_145",
+        "Resource": "aws_s3_bucket.st01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure the S3 bucket has access logging enabled",
+        "Severity": null,
+        "CheckId": "CKV_AWS_18",
+        "Resource": "aws_s3_bucket.st01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "S3 Bucket has an ACL defined which allows public READ access.",
+        "Severity": null,
+        "CheckId": "CKV_AWS_20",
+        "Resource": "aws_s3_bucket.st01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure all data stored in the S3 bucket have versioning enabled",
+        "Severity": null,
+        "CheckId": "CKV_AWS_21",
+        "Resource": "aws_s3_bucket.st01",
+        "Occurrences": 1
+      }
+    ],
+    "KicsAllFindings": [
+      {
+        "Name": "S3 Bucket ACL Allows Read Or Write to All Users",
+        "Severity": "CRITICAL",
+        "CheckId": "38c5ee0d-7f22-4260-ab72-5073048df100",
+        "Resource": "aws_s3_bucket_acl.st01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "S3 Bucket Without Versioning",
+        "Severity": "MEDIUM",
+        "CheckId": "568a4d22-3517-44a6-a7ad-6a7eed88722c",
+        "Resource": "aws_s3_bucket.ict-risk-st01-public-acl",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Resource Not Using Tags",
+        "Severity": "INFO",
+        "CheckId": "e38a8e0a-b88b-4902-b3fe-b0fcb17d5c10",
+        "Resource": "aws_s3_bucket.st01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "IAM Access Analyzer Not Enabled",
+        "Severity": "LOW",
+        "CheckId": "e592a0c5-5bdb-414c-9066-5dba7cdea370",
+        "Resource": "n/a.n/a",
+        "Occurrences": 1
+      },
+      {
+        "Name": "S3 Bucket Logging Disabled",
+        "Severity": "MEDIUM",
+        "CheckId": "f861041c-8c9f-4156-acfc-5e6e524f5884",
+        "Resource": "aws_s3_bucket.ict-risk-st01-public-acl",
+        "Occurrences": 1
+      }
+    ],
+    "RiskProfile": {
+      "asset": "aws_s3_bucket.st01 / aws_s3_bucket_acl.st01",
+      "exposure_vector": "Public internet read access through S3 ACL (public-read)",
+      "cia_impact": "Confidentiality (High)",
+      "remediation": "Remove public ACL and add aws_s3_bucket_public_access_block with all four flags set to true"
+    }
+  },
+  {
+    "Id": "ST-02",
+    "Type": "vulnerable",
+    "Category": "public-storage",
+    "File": "benchmark/cases/ST-02-vulnerable.tf",
+    "ExpectedIssue": "disabled S3 public-access protection",
+    "StructuralPattern": "explicit_misconfigured_attribute",
+    "CheckovStatus": "detected",
+    "KicsStatus": "detected",
+    "CheckovTargetedRuleCount": 5,
+    "KicsTargetedRuleCount": 3,
+    "CheckovTargetedInstanceCount": 5,
+    "KicsTargetedInstanceCount": 3,
+    "CheckovTargetedFindings": [
+      {
+        "Name": "Ensure that S3 bucket has a Public Access block",
+        "Severity": null,
+        "CheckId": "CKV2_AWS_6",
+        "Resource": "aws_s3_bucket.st02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure S3 bucket has block public ACLS enabled",
+        "Severity": null,
+        "CheckId": "CKV_AWS_53",
+        "Resource": "aws_s3_bucket_public_access_block.st02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure S3 bucket has block public policy enabled",
+        "Severity": null,
+        "CheckId": "CKV_AWS_54",
+        "Resource": "aws_s3_bucket_public_access_block.st02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure S3 bucket has ignore public ACLs enabled",
+        "Severity": null,
+        "CheckId": "CKV_AWS_55",
+        "Resource": "aws_s3_bucket_public_access_block.st02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure S3 bucket has 'restrict_public_buckets' enabled",
+        "Severity": null,
+        "CheckId": "CKV_AWS_56",
+        "Resource": "aws_s3_bucket_public_access_block.st02",
+        "Occurrences": 1
+      }
+    ],
+    "KicsTargetedFindings": [
+      {
+        "Name": "S3 Bucket Allows Public Policy",
+        "Severity": "MEDIUM",
+        "CheckId": "1a4bc881-9f69-4d44-8c9a-d37d08f54c50",
+        "Resource": "aws_s3_bucket_public_access_block.st02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "S3 Bucket Without Ignore Public ACL",
+        "Severity": "MEDIUM",
+        "CheckId": "4fa66806-0dd9-4f8d-9480-3174d39c7c91",
+        "Resource": "aws_s3_bucket_public_access_block.st02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "S3 Bucket Allows Public ACL",
+        "Severity": "MEDIUM",
+        "CheckId": "d0cc8694-fcad-43ff-ac86-32331d7e867f",
+        "Resource": "aws_s3_bucket_public_access_block.st02",
+        "Occurrences": 1
+      }
+    ],
+    "CheckovUniqueRuleCount": 11,
+    "KicsUniqueRuleCount": 7,
+    "CheckovAllFindingCount": 11,
+    "KicsAllFindingCount": 7,
+    "CheckovNonTargetFindingCount": 6,
+    "KicsNonTargetFindingCount": 4,
+    "CheckovAllFindings": [
+      {
+        "Name": "Ensure that S3 bucket has a Public Access block",
+        "Severity": null,
+        "CheckId": "CKV2_AWS_6",
+        "Resource": "aws_s3_bucket.st02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure that an S3 bucket has a lifecycle configuration",
+        "Severity": null,
+        "CheckId": "CKV2_AWS_61",
+        "Resource": "aws_s3_bucket.st02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure S3 buckets should have event notifications enabled",
+        "Severity": null,
+        "CheckId": "CKV2_AWS_62",
+        "Resource": "aws_s3_bucket.st02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure that S3 bucket has cross-region replication enabled",
+        "Severity": null,
+        "CheckId": "CKV_AWS_144",
+        "Resource": "aws_s3_bucket.st02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure that S3 buckets are encrypted with KMS by default",
+        "Severity": null,
+        "CheckId": "CKV_AWS_145",
+        "Resource": "aws_s3_bucket.st02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure the S3 bucket has access logging enabled",
+        "Severity": null,
+        "CheckId": "CKV_AWS_18",
+        "Resource": "aws_s3_bucket.st02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure all data stored in the S3 bucket have versioning enabled",
+        "Severity": null,
+        "CheckId": "CKV_AWS_21",
+        "Resource": "aws_s3_bucket.st02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure S3 bucket has block public ACLS enabled",
+        "Severity": null,
+        "CheckId": "CKV_AWS_53",
+        "Resource": "aws_s3_bucket_public_access_block.st02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure S3 bucket has block public policy enabled",
+        "Severity": null,
+        "CheckId": "CKV_AWS_54",
+        "Resource": "aws_s3_bucket_public_access_block.st02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure S3 bucket has ignore public ACLs enabled",
+        "Severity": null,
+        "CheckId": "CKV_AWS_55",
+        "Resource": "aws_s3_bucket_public_access_block.st02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure S3 bucket has 'restrict_public_buckets' enabled",
+        "Severity": null,
+        "CheckId": "CKV_AWS_56",
+        "Resource": "aws_s3_bucket_public_access_block.st02",
+        "Occurrences": 1
+      }
+    ],
+    "KicsAllFindings": [
+      {
+        "Name": "S3 Bucket Allows Public Policy",
+        "Severity": "MEDIUM",
+        "CheckId": "1a4bc881-9f69-4d44-8c9a-d37d08f54c50",
+        "Resource": "aws_s3_bucket_public_access_block.st02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "S3 Bucket Without Ignore Public ACL",
+        "Severity": "MEDIUM",
+        "CheckId": "4fa66806-0dd9-4f8d-9480-3174d39c7c91",
+        "Resource": "aws_s3_bucket_public_access_block.st02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "S3 Bucket Without Versioning",
+        "Severity": "MEDIUM",
+        "CheckId": "568a4d22-3517-44a6-a7ad-6a7eed88722c",
+        "Resource": "aws_s3_bucket.ict-risk-st02-public-block-disabled",
+        "Occurrences": 1
+      },
+      {
+        "Name": "S3 Bucket Allows Public ACL",
+        "Severity": "MEDIUM",
+        "CheckId": "d0cc8694-fcad-43ff-ac86-32331d7e867f",
+        "Resource": "aws_s3_bucket_public_access_block.st02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Resource Not Using Tags",
+        "Severity": "INFO",
+        "CheckId": "e38a8e0a-b88b-4902-b3fe-b0fcb17d5c10",
+        "Resource": "aws_s3_bucket.st02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "IAM Access Analyzer Not Enabled",
+        "Severity": "LOW",
+        "CheckId": "e592a0c5-5bdb-414c-9066-5dba7cdea370",
+        "Resource": "n/a.n/a",
+        "Occurrences": 1
+      },
+      {
+        "Name": "S3 Bucket Logging Disabled",
+        "Severity": "MEDIUM",
+        "CheckId": "f861041c-8c9f-4156-acfc-5e6e524f5884",
+        "Resource": "aws_s3_bucket.ict-risk-st02-public-block-disabled",
+        "Occurrences": 1
+      }
+    ],
+    "RiskProfile": {
+      "asset": "aws_s3_bucket_public_access_block.st02",
+      "exposure_vector": "Disabled public access block allows future public ACLs or policies to expose bucket objects",
+      "cia_impact": "Confidentiality (Medium-High)",
+      "remediation": "Set block_public_acls, block_public_policy, ignore_public_acls, and restrict_public_buckets to true"
+    }
+  },
+  {
+    "Id": "ST-03",
+    "Type": "vulnerable",
+    "Category": "public-storage",
+    "File": "benchmark/cases/ST-03-vulnerable.tf",
+    "ExpectedIssue": "public S3 bucket policy (Principal: *)",
+    "StructuralPattern": "iam_policy_json_wildcard",
+    "CheckovStatus": "detected",
+    "KicsStatus": "detected",
+    "CheckovTargetedRuleCount": 2,
+    "KicsTargetedRuleCount": 2,
+    "CheckovTargetedInstanceCount": 2,
+    "KicsTargetedInstanceCount": 2,
+    "CheckovTargetedFindings": [
+      {
+        "Name": "Ensure that S3 bucket has a Public Access block",
+        "Severity": null,
+        "CheckId": "CKV2_AWS_6",
+        "Resource": "aws_s3_bucket.st03",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure S3 bucket does not allow an action with any Principal",
+        "Severity": null,
+        "CheckId": "CKV_AWS_70",
+        "Resource": "aws_s3_bucket_policy.st03",
+        "Occurrences": 1
+      }
+    ],
+    "KicsTargetedFindings": [
+      {
+        "Name": "S3 Bucket Allows Get Action From All Principals",
+        "Severity": "HIGH",
+        "CheckId": "1df37f4b-7197-45ce-83f8-9994d2fcf885",
+        "Resource": "aws_s3_bucket_policy.${aws_s3_bucket.st03.id}",
+        "Occurrences": 1
+      },
+      {
+        "Name": "S3 Bucket Access to Any Principal",
+        "Severity": "CRITICAL",
+        "CheckId": "7af43613-6bb9-4a0e-8c4d-1314b799425e",
+        "Resource": "aws_s3_bucket_policy.${aws_s3_bucket.st03.id}",
+        "Occurrences": 1
+      }
+    ],
+    "CheckovUniqueRuleCount": 8,
+    "KicsUniqueRuleCount": 7,
+    "CheckovAllFindingCount": 8,
+    "KicsAllFindingCount": 7,
+    "CheckovNonTargetFindingCount": 6,
+    "KicsNonTargetFindingCount": 5,
+    "CheckovAllFindings": [
+      {
+        "Name": "Ensure that S3 bucket has a Public Access block",
+        "Severity": null,
+        "CheckId": "CKV2_AWS_6",
+        "Resource": "aws_s3_bucket.st03",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure that an S3 bucket has a lifecycle configuration",
+        "Severity": null,
+        "CheckId": "CKV2_AWS_61",
+        "Resource": "aws_s3_bucket.st03",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure S3 buckets should have event notifications enabled",
+        "Severity": null,
+        "CheckId": "CKV2_AWS_62",
+        "Resource": "aws_s3_bucket.st03",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure that S3 bucket has cross-region replication enabled",
+        "Severity": null,
+        "CheckId": "CKV_AWS_144",
+        "Resource": "aws_s3_bucket.st03",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure that S3 buckets are encrypted with KMS by default",
+        "Severity": null,
+        "CheckId": "CKV_AWS_145",
+        "Resource": "aws_s3_bucket.st03",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure the S3 bucket has access logging enabled",
+        "Severity": null,
+        "CheckId": "CKV_AWS_18",
+        "Resource": "aws_s3_bucket.st03",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure all data stored in the S3 bucket have versioning enabled",
+        "Severity": null,
+        "CheckId": "CKV_AWS_21",
+        "Resource": "aws_s3_bucket.st03",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure S3 bucket does not allow an action with any Principal",
+        "Severity": null,
+        "CheckId": "CKV_AWS_70",
+        "Resource": "aws_s3_bucket_policy.st03",
+        "Occurrences": 1
+      }
+    ],
+    "KicsAllFindings": [
+      {
+        "Name": "S3 Bucket Allows Get Action From All Principals",
+        "Severity": "HIGH",
+        "CheckId": "1df37f4b-7197-45ce-83f8-9994d2fcf885",
+        "Resource": "aws_s3_bucket_policy.${aws_s3_bucket.st03.id}",
+        "Occurrences": 1
+      },
+      {
+        "Name": "S3 Bucket Policy Accepts HTTP Requests",
+        "Severity": "MEDIUM",
+        "CheckId": "4bc4dd4c-7d8d-405e-a0fb-57fa4c31b4d9",
+        "Resource": "aws_s3_bucket_policy.${aws_s3_bucket.st03.id}",
+        "Occurrences": 1
+      },
+      {
+        "Name": "S3 Bucket Without Versioning",
+        "Severity": "MEDIUM",
+        "CheckId": "568a4d22-3517-44a6-a7ad-6a7eed88722c",
+        "Resource": "aws_s3_bucket.ict-risk-st03-public-policy",
+        "Occurrences": 1
+      },
+      {
+        "Name": "S3 Bucket Access to Any Principal",
+        "Severity": "CRITICAL",
+        "CheckId": "7af43613-6bb9-4a0e-8c4d-1314b799425e",
+        "Resource": "aws_s3_bucket_policy.${aws_s3_bucket.st03.id}",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Resource Not Using Tags",
+        "Severity": "INFO",
+        "CheckId": "e38a8e0a-b88b-4902-b3fe-b0fcb17d5c10",
+        "Resource": "aws_s3_bucket.st03",
+        "Occurrences": 1
+      },
+      {
+        "Name": "IAM Access Analyzer Not Enabled",
+        "Severity": "LOW",
+        "CheckId": "e592a0c5-5bdb-414c-9066-5dba7cdea370",
+        "Resource": "n/a.n/a",
+        "Occurrences": 1
+      },
+      {
+        "Name": "S3 Bucket Logging Disabled",
+        "Severity": "MEDIUM",
+        "CheckId": "f861041c-8c9f-4156-acfc-5e6e524f5884",
+        "Resource": "aws_s3_bucket.ict-risk-st03-public-policy",
+        "Occurrences": 1
+      }
+    ],
+    "RiskProfile": {
+      "asset": "aws_s3_bucket_policy.st03",
+      "exposure_vector": "Anonymous object read access via wildcard Principal (*) on s3:GetObject",
+      "cia_impact": "Confidentiality (Critical)",
+      "remediation": "Remove wildcard principal from bucket policy and enable bucket public access block"
+    }
+  },
+  {
+    "Id": "EN-01",
+    "Type": "vulnerable",
+    "Category": "encryption-at-rest",
+    "File": "benchmark/cases/EN-01-vulnerable.tf",
+    "ExpectedIssue": "missing S3 server-side encryption configuration",
+    "StructuralPattern": "missing_companion_resource",
+    "CheckovStatus": "detected",
+    "KicsStatus": "missed-or-no-applicable-rule",
+    "CheckovTargetedRuleCount": 1,
+    "KicsTargetedRuleCount": 0,
+    "CheckovTargetedInstanceCount": 1,
+    "KicsTargetedInstanceCount": 0,
+    "CheckovTargetedFindings": [
+      {
+        "Name": "Ensure that S3 buckets are encrypted with KMS by default",
+        "Severity": null,
+        "CheckId": "CKV_AWS_145",
+        "Resource": "aws_s3_bucket.en01",
+        "Occurrences": 1
+      }
+    ],
+    "KicsTargetedFindings": [],
+    "CheckovUniqueRuleCount": 7,
+    "KicsUniqueRuleCount": 4,
+    "CheckovAllFindingCount": 7,
+    "KicsAllFindingCount": 4,
+    "CheckovNonTargetFindingCount": 6,
+    "KicsNonTargetFindingCount": 4,
+    "CheckovAllFindings": [
+      {
+        "Name": "Ensure that S3 bucket has a Public Access block",
+        "Severity": null,
+        "CheckId": "CKV2_AWS_6",
+        "Resource": "aws_s3_bucket.en01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure that an S3 bucket has a lifecycle configuration",
+        "Severity": null,
+        "CheckId": "CKV2_AWS_61",
+        "Resource": "aws_s3_bucket.en01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure S3 buckets should have event notifications enabled",
+        "Severity": null,
+        "CheckId": "CKV2_AWS_62",
+        "Resource": "aws_s3_bucket.en01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure that S3 bucket has cross-region replication enabled",
+        "Severity": null,
+        "CheckId": "CKV_AWS_144",
+        "Resource": "aws_s3_bucket.en01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure that S3 buckets are encrypted with KMS by default",
+        "Severity": null,
+        "CheckId": "CKV_AWS_145",
+        "Resource": "aws_s3_bucket.en01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure the S3 bucket has access logging enabled",
+        "Severity": null,
+        "CheckId": "CKV_AWS_18",
+        "Resource": "aws_s3_bucket.en01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure all data stored in the S3 bucket have versioning enabled",
+        "Severity": null,
+        "CheckId": "CKV_AWS_21",
+        "Resource": "aws_s3_bucket.en01",
+        "Occurrences": 1
+      }
+    ],
+    "KicsAllFindings": [
+      {
+        "Name": "S3 Bucket Without Versioning",
+        "Severity": "MEDIUM",
+        "CheckId": "568a4d22-3517-44a6-a7ad-6a7eed88722c",
+        "Resource": "aws_s3_bucket.ict-risk-en01-unencrypted",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Resource Not Using Tags",
+        "Severity": "INFO",
+        "CheckId": "e38a8e0a-b88b-4902-b3fe-b0fcb17d5c10",
+        "Resource": "aws_s3_bucket.en01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "IAM Access Analyzer Not Enabled",
+        "Severity": "LOW",
+        "CheckId": "e592a0c5-5bdb-414c-9066-5dba7cdea370",
+        "Resource": "n/a.n/a",
+        "Occurrences": 1
+      },
+      {
+        "Name": "S3 Bucket Logging Disabled",
+        "Severity": "MEDIUM",
+        "CheckId": "f861041c-8c9f-4156-acfc-5e6e524f5884",
+        "Resource": "aws_s3_bucket.ict-risk-en01-unencrypted",
+        "Occurrences": 1
+      }
+    ],
+    "DisagreementReason": "Checkov flags the bucket with CKV_AWS_145 (which requires explicit aws:kms encryption on every aws_s3_bucket and fires whenever KMS encryption is absent); KICS does not flag an aws_s3_bucket that omits the separate server-side encryption resource.",
+    "RiskProfile": {
+      "asset": "aws_s3_bucket.en01",
+      "exposure_vector": "No explicit server-side encryption configuration defined in Terraform",
+      "cia_impact": "Confidentiality (Medium)",
+      "remediation": "Add an aws_s3_bucket_server_side_encryption_configuration resource"
+    }
+  },
+  {
+    "Id": "EN-02",
+    "Type": "vulnerable",
+    "Category": "encryption-at-rest",
+    "File": "benchmark/cases/EN-02-vulnerable.tf",
+    "ExpectedIssue": "unencrypted EBS volume (encrypted = false)",
+    "StructuralPattern": "explicit_misconfigured_attribute",
+    "CheckovStatus": "detected",
+    "KicsStatus": "detected",
+    "CheckovTargetedRuleCount": 1,
+    "KicsTargetedRuleCount": 1,
+    "CheckovTargetedInstanceCount": 1,
+    "KicsTargetedInstanceCount": 1,
+    "CheckovTargetedFindings": [
+      {
+        "Name": "Ensure all data stored in the EBS is securely encrypted",
+        "Severity": null,
+        "CheckId": "CKV_AWS_3",
+        "Resource": "aws_ebs_volume.en02",
+        "Occurrences": 1
+      }
+    ],
+    "KicsTargetedFindings": [
+      {
+        "Name": "EBS Volume Encryption Disabled",
+        "Severity": "HIGH",
+        "CheckId": "cc997676-481b-4e93-aa81-d19f8c5e9b12",
+        "Resource": "aws_ebs_volume.en02",
+        "Occurrences": 1
+      }
+    ],
+    "CheckovUniqueRuleCount": 2,
+    "KicsUniqueRuleCount": 3,
+    "CheckovAllFindingCount": 2,
+    "KicsAllFindingCount": 3,
+    "CheckovNonTargetFindingCount": 1,
+    "KicsNonTargetFindingCount": 2,
+    "CheckovAllFindings": [
+      {
+        "Name": "Ensure EBS Volume is encrypted by KMS using a customer managed Key (CMK)",
+        "Severity": null,
+        "CheckId": "CKV_AWS_189",
+        "Resource": "aws_ebs_volume.en02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure all data stored in the EBS is securely encrypted",
+        "Severity": null,
+        "CheckId": "CKV_AWS_3",
+        "Resource": "aws_ebs_volume.en02",
+        "Occurrences": 1
+      }
+    ],
+    "KicsAllFindings": [
+      {
+        "Name": "EBS Volume Encryption Disabled",
+        "Severity": "HIGH",
+        "CheckId": "cc997676-481b-4e93-aa81-d19f8c5e9b12",
+        "Resource": "aws_ebs_volume.en02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Resource Not Using Tags",
+        "Severity": "INFO",
+        "CheckId": "e38a8e0a-b88b-4902-b3fe-b0fcb17d5c10",
+        "Resource": "aws_ebs_volume.en02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "IAM Access Analyzer Not Enabled",
+        "Severity": "LOW",
+        "CheckId": "e592a0c5-5bdb-414c-9066-5dba7cdea370",
+        "Resource": "n/a.n/a",
+        "Occurrences": 1
+      }
+    ],
+    "RiskProfile": {
+      "asset": "aws_ebs_volume.en02",
+      "exposure_vector": "Unencrypted block storage volume and snapshots",
+      "cia_impact": "Confidentiality (High)",
+      "remediation": "Set encrypted = true on aws_ebs_volume"
+    }
+  },
+  {
+    "Id": "ID-01",
+    "Type": "vulnerable",
+    "Category": "identity-permissions",
+    "File": "benchmark/cases/ID-01-vulnerable.tf",
+    "ExpectedIssue": "wildcard IAM administrative permissions (Action: *, Resource: *)",
+    "StructuralPattern": "iam_policy_json_wildcard",
+    "CheckovStatus": "detected",
+    "KicsStatus": "detected",
+    "CheckovTargetedRuleCount": 9,
+    "KicsTargetedRuleCount": 3,
+    "CheckovTargetedInstanceCount": 9,
+    "KicsTargetedInstanceCount": 3,
+    "CheckovTargetedFindings": [
+      {
+        "Name": "Ensure AWS IAM policy does not allow full IAM privileges",
+        "Severity": null,
+        "CheckId": "CKV2_AWS_40",
+        "Resource": "aws_iam_policy.id01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure IAM policies does not allow privilege escalation",
+        "Severity": null,
+        "CheckId": "CKV_AWS_286",
+        "Resource": "aws_iam_policy.id01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure IAM policies does not allow credentials exposure",
+        "Severity": null,
+        "CheckId": "CKV_AWS_287",
+        "Resource": "aws_iam_policy.id01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure IAM policies does not allow data exfiltration",
+        "Severity": null,
+        "CheckId": "CKV_AWS_288",
+        "Resource": "aws_iam_policy.id01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure IAM policies does not allow permissions management / resource exposure without constraints",
+        "Severity": null,
+        "CheckId": "CKV_AWS_289",
+        "Resource": "aws_iam_policy.id01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure IAM policies does not allow write access without constraints",
+        "Severity": null,
+        "CheckId": "CKV_AWS_290",
+        "Resource": "aws_iam_policy.id01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure no IAM policies documents allow \"*\" as a statement's resource for restrictable actions",
+        "Severity": null,
+        "CheckId": "CKV_AWS_355",
+        "Resource": "aws_iam_policy.id01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure IAM policies that allow full \"*-*\" administrative privileges are not created",
+        "Severity": null,
+        "CheckId": "CKV_AWS_62",
+        "Resource": "aws_iam_policy.id01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure no IAM policies documents allow \"*\" as a statement's actions",
+        "Severity": null,
+        "CheckId": "CKV_AWS_63",
+        "Resource": "aws_iam_policy.id01",
+        "Occurrences": 1
+      }
+    ],
+    "KicsTargetedFindings": [
+      {
+        "Name": "IAM Policies With Full Privileges",
+        "Severity": "MEDIUM",
+        "CheckId": "2f37c4a3-58b9-4afe-8a87-d7f1d2286f84",
+        "Resource": "aws_iam_policy.ict-risk-id01-wildcard",
+        "Occurrences": 1
+      },
+      {
+        "Name": "IAM Policy Grants Full Permissions",
+        "Severity": "HIGH",
+        "CheckId": "575a2155-6af1-4026-b1af-d5bc8fe2a904",
+        "Resource": "aws_iam_policy.ict-risk-id01-wildcard",
+        "Occurrences": 1
+      },
+      {
+        "Name": "IAM policy allows for data exfiltration",
+        "Severity": "MEDIUM",
+        "CheckId": "ba2ed23b-52d3-45ca-be25-f6c358d45abd",
+        "Resource": "aws_iam_policy.ict-risk-id01-wildcard",
+        "Occurrences": 1
+      }
+    ],
+    "CheckovUniqueRuleCount": 9,
+    "KicsUniqueRuleCount": 6,
+    "CheckovAllFindingCount": 9,
+    "KicsAllFindingCount": 6,
+    "CheckovNonTargetFindingCount": 0,
+    "KicsNonTargetFindingCount": 3,
+    "CheckovAllFindings": [
+      {
+        "Name": "Ensure AWS IAM policy does not allow full IAM privileges",
+        "Severity": null,
+        "CheckId": "CKV2_AWS_40",
+        "Resource": "aws_iam_policy.id01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure IAM policies does not allow privilege escalation",
+        "Severity": null,
+        "CheckId": "CKV_AWS_286",
+        "Resource": "aws_iam_policy.id01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure IAM policies does not allow credentials exposure",
+        "Severity": null,
+        "CheckId": "CKV_AWS_287",
+        "Resource": "aws_iam_policy.id01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure IAM policies does not allow data exfiltration",
+        "Severity": null,
+        "CheckId": "CKV_AWS_288",
+        "Resource": "aws_iam_policy.id01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure IAM policies does not allow permissions management / resource exposure without constraints",
+        "Severity": null,
+        "CheckId": "CKV_AWS_289",
+        "Resource": "aws_iam_policy.id01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure IAM policies does not allow write access without constraints",
+        "Severity": null,
+        "CheckId": "CKV_AWS_290",
+        "Resource": "aws_iam_policy.id01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure no IAM policies documents allow \"*\" as a statement's resource for restrictable actions",
+        "Severity": null,
+        "CheckId": "CKV_AWS_355",
+        "Resource": "aws_iam_policy.id01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure IAM policies that allow full \"*-*\" administrative privileges are not created",
+        "Severity": null,
+        "CheckId": "CKV_AWS_62",
+        "Resource": "aws_iam_policy.id01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure no IAM policies documents allow \"*\" as a statement's actions",
+        "Severity": null,
+        "CheckId": "CKV_AWS_63",
+        "Resource": "aws_iam_policy.id01",
+        "Occurrences": 1
+      }
+    ],
+    "KicsAllFindings": [
+      {
+        "Name": "Lambda IAM InvokeFunction Misconfigured",
+        "Severity": "LOW",
+        "CheckId": "0ca1017d-3b80-423e-bb9c-6cd5898d34bd",
+        "Resource": "aws_iam_policy.ict-risk-id01-wildcard",
+        "Occurrences": 1
+      },
+      {
+        "Name": "IAM Policies With Full Privileges",
+        "Severity": "MEDIUM",
+        "CheckId": "2f37c4a3-58b9-4afe-8a87-d7f1d2286f84",
+        "Resource": "aws_iam_policy.ict-risk-id01-wildcard",
+        "Occurrences": 1
+      },
+      {
+        "Name": "IAM Policy Grants Full Permissions",
+        "Severity": "HIGH",
+        "CheckId": "575a2155-6af1-4026-b1af-d5bc8fe2a904",
+        "Resource": "aws_iam_policy.ict-risk-id01-wildcard",
+        "Occurrences": 1
+      },
+      {
+        "Name": "IAM policy allows for data exfiltration",
+        "Severity": "MEDIUM",
+        "CheckId": "ba2ed23b-52d3-45ca-be25-f6c358d45abd",
+        "Resource": "aws_iam_policy.ict-risk-id01-wildcard",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Resource Not Using Tags",
+        "Severity": "INFO",
+        "CheckId": "e38a8e0a-b88b-4902-b3fe-b0fcb17d5c10",
+        "Resource": "aws_iam_policy.ict-risk-id01-wildcard",
+        "Occurrences": 1
+      },
+      {
+        "Name": "IAM Access Analyzer Not Enabled",
+        "Severity": "LOW",
+        "CheckId": "e592a0c5-5bdb-414c-9066-5dba7cdea370",
+        "Resource": "n/a.n/a",
+        "Occurrences": 1
+      }
+    ],
+    "RiskProfile": {
+      "asset": "aws_iam_policy.id01",
+      "exposure_vector": "Full administrative permissions across all actions and resources in the AWS account",
+      "cia_impact": "Confidentiality, Integrity, Availability (Critical)",
+      "remediation": "Restrict Action to required operations (e.g., s3:GetObject) and Resource to specific ARNs"
+    }
+  },
+  {
+    "Id": "ID-02",
+    "Type": "vulnerable",
+    "Category": "identity-permissions",
+    "File": "benchmark/cases/ID-02-vulnerable.tf",
+    "ExpectedIssue": "unrestricted iam:PassRole on all resources (*)",
+    "StructuralPattern": "iam_action_specific_escalation",
+    "CheckovStatus": "detected",
+    "KicsStatus": "missed-or-no-applicable-rule",
+    "CheckovTargetedRuleCount": 2,
+    "KicsTargetedRuleCount": 0,
+    "CheckovTargetedInstanceCount": 2,
+    "KicsTargetedInstanceCount": 0,
+    "CheckovTargetedFindings": [
+      {
+        "Name": "Ensure IAM policies does not allow permissions management / resource exposure without constraints",
+        "Severity": null,
+        "CheckId": "CKV_AWS_289",
+        "Resource": "aws_iam_policy.id02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure no IAM policies documents allow \"*\" as a statement's resource for restrictable actions",
+        "Severity": null,
+        "CheckId": "CKV_AWS_355",
+        "Resource": "aws_iam_policy.id02",
+        "Occurrences": 1
+      }
+    ],
+    "KicsTargetedFindings": [],
+    "CheckovUniqueRuleCount": 2,
+    "KicsUniqueRuleCount": 2,
+    "CheckovAllFindingCount": 2,
+    "KicsAllFindingCount": 2,
+    "CheckovNonTargetFindingCount": 0,
+    "KicsNonTargetFindingCount": 2,
+    "CheckovAllFindings": [
+      {
+        "Name": "Ensure IAM policies does not allow permissions management / resource exposure without constraints",
+        "Severity": null,
+        "CheckId": "CKV_AWS_289",
+        "Resource": "aws_iam_policy.id02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure no IAM policies documents allow \"*\" as a statement's resource for restrictable actions",
+        "Severity": null,
+        "CheckId": "CKV_AWS_355",
+        "Resource": "aws_iam_policy.id02",
+        "Occurrences": 1
+      }
+    ],
+    "KicsAllFindings": [
+      {
+        "Name": "Resource Not Using Tags",
+        "Severity": "INFO",
+        "CheckId": "e38a8e0a-b88b-4902-b3fe-b0fcb17d5c10",
+        "Resource": "aws_iam_policy.ict-risk-id02-passrole",
+        "Occurrences": 1
+      },
+      {
+        "Name": "IAM Access Analyzer Not Enabled",
+        "Severity": "LOW",
+        "CheckId": "e592a0c5-5bdb-414c-9066-5dba7cdea370",
+        "Resource": "n/a.n/a",
+        "Occurrences": 1
+      }
+    ],
+    "DisagreementReason": "Checkov flags standalone aws_iam_policy resources granting iam:PassRole on Resource '*' via its permissions-management (CKV_AWS_289) and restrictable-wildcard-resource (CKV_AWS_355) checks; KICS's PassRole queries target inline role policies or attached identity policies rather than a standalone unattached aws_iam_policy.",
+    "RiskProfile": {
+      "asset": "aws_iam_policy.id02",
+      "exposure_vector": "Privilege escalation by passing an existing high-privilege IAM role to a compute service",
+      "cia_impact": "Confidentiality, Integrity (High)",
+      "remediation": "Restrict iam:PassRole Resource to a specific IAM role ARN"
+    }
+  },
+  {
+    "Id": "NW-01",
+    "Type": "vulnerable",
+    "Category": "network-exposure",
+    "File": "benchmark/cases/NW-01-vulnerable.tf",
+    "ExpectedIssue": "SSH (TCP port 22) open to 0.0.0.0/0",
+    "StructuralPattern": "explicit_port_cidr_exposure",
+    "CheckovStatus": "detected",
+    "KicsStatus": "detected",
+    "CheckovTargetedRuleCount": 1,
+    "KicsTargetedRuleCount": 3,
+    "CheckovTargetedInstanceCount": 1,
+    "KicsTargetedInstanceCount": 3,
+    "CheckovTargetedFindings": [
+      {
+        "Name": "Ensure no security groups allow ingress from 0.0.0.0:0 to port 22",
+        "Severity": null,
+        "CheckId": "CKV_AWS_24",
+        "Resource": "aws_security_group.nw01",
+        "Occurrences": 1
+      }
+    ],
+    "KicsTargetedFindings": [
+      {
+        "Name": "Sensitive Port Is Exposed To Entire Network",
+        "Severity": "HIGH",
+        "CheckId": "381c3f2a-ef6f-4eff-99f7-b169cda3422c",
+        "Resource": "aws_security_group.ict-risk-nw01-ssh-open",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Unrestricted Security Group Ingress",
+        "Severity": "HIGH",
+        "CheckId": "4728cd65-a20c-49da-8b31-9c08b423e4db",
+        "Resource": "aws_security_group.ict-risk-nw01-ssh-open",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Security Group With Unrestricted Access To SSH",
+        "Severity": "MEDIUM",
+        "CheckId": "65905cec-d691-4320-b320-2000436cb696",
+        "Resource": "aws_security_group.ict-risk-nw01-ssh-open",
+        "Occurrences": 1
+      }
+    ],
+    "CheckovUniqueRuleCount": 3,
+    "KicsUniqueRuleCount": 8,
+    "CheckovAllFindingCount": 3,
+    "KicsAllFindingCount": 8,
+    "CheckovNonTargetFindingCount": 2,
+    "KicsNonTargetFindingCount": 5,
+    "CheckovAllFindings": [
+      {
+        "Name": "Ensure that Security Groups are attached to another resource",
+        "Severity": null,
+        "CheckId": "CKV2_AWS_5",
+        "Resource": "aws_security_group.nw01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure every security group and rule has a description",
+        "Severity": null,
+        "CheckId": "CKV_AWS_23",
+        "Resource": "aws_security_group.nw01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure no security groups allow ingress from 0.0.0.0:0 to port 22",
+        "Severity": null,
+        "CheckId": "CKV_AWS_24",
+        "Resource": "aws_security_group.nw01",
+        "Occurrences": 1
+      }
+    ],
+    "KicsAllFindings": [
+      {
+        "Name": "Sensitive Port Is Exposed To Entire Network",
+        "Severity": "HIGH",
+        "CheckId": "381c3f2a-ef6f-4eff-99f7-b169cda3422c",
+        "Resource": "aws_security_group.ict-risk-nw01-ssh-open",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Unrestricted Security Group Ingress",
+        "Severity": "HIGH",
+        "CheckId": "4728cd65-a20c-49da-8b31-9c08b423e4db",
+        "Resource": "aws_security_group.ict-risk-nw01-ssh-open",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Security Group Not Used",
+        "Severity": "INFO",
+        "CheckId": "4849211b-ac39-479e-ae78-5694d506cb24",
+        "Resource": "aws_security_group.ict-risk-nw01-ssh-open",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Security Group With Unrestricted Access To SSH",
+        "Severity": "MEDIUM",
+        "CheckId": "65905cec-d691-4320-b320-2000436cb696",
+        "Resource": "aws_security_group.ict-risk-nw01-ssh-open",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Security Group Rule Without Description",
+        "Severity": "INFO",
+        "CheckId": "68eb4bf3-f9bf-463d-b5cf-e029bb446d2e",
+        "Resource": "aws_security_group.nw01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Security Group Without Description",
+        "Severity": "INFO",
+        "CheckId": "cb3f5ed6-0d18-40de-a93d-b3538db31e8c",
+        "Resource": "aws_security_group.ict-risk-nw01-ssh-open",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Resource Not Using Tags",
+        "Severity": "INFO",
+        "CheckId": "e38a8e0a-b88b-4902-b3fe-b0fcb17d5c10",
+        "Resource": "aws_security_group.ict-risk-nw01-ssh-open",
+        "Occurrences": 1
+      },
+      {
+        "Name": "IAM Access Analyzer Not Enabled",
+        "Severity": "LOW",
+        "CheckId": "e592a0c5-5bdb-414c-9066-5dba7cdea370",
+        "Resource": "n/a.n/a",
+        "Occurrences": 1
+      }
+    ],
+    "RiskProfile": {
+      "asset": "aws_security_group.nw01",
+      "exposure_vector": "Public internet access to SSH (port 22) enabling brute-force or remote exploit attempts",
+      "cia_impact": "Confidentiality, Integrity, Availability (High)",
+      "remediation": "Restrict ingress cidr_blocks to private network ranges (e.g., 10.0.0.0/8)"
+    }
+  },
+  {
+    "Id": "NW-02",
+    "Type": "vulnerable",
+    "Category": "network-exposure",
+    "File": "benchmark/cases/NW-02-vulnerable.tf",
+    "ExpectedIssue": "RDP (TCP port 3389) open to 0.0.0.0/0",
+    "StructuralPattern": "explicit_port_cidr_exposure",
+    "CheckovStatus": "detected",
+    "KicsStatus": "detected",
+    "CheckovTargetedRuleCount": 1,
+    "KicsTargetedRuleCount": 3,
+    "CheckovTargetedInstanceCount": 1,
+    "KicsTargetedInstanceCount": 3,
+    "CheckovTargetedFindings": [
+      {
+        "Name": "Ensure no security groups allow ingress from 0.0.0.0:0 to port 3389",
+        "Severity": null,
+        "CheckId": "CKV_AWS_25",
+        "Resource": "aws_security_group.nw02",
+        "Occurrences": 1
+      }
+    ],
+    "KicsTargetedFindings": [
+      {
+        "Name": "Remote Desktop Port Open To Internet",
+        "Severity": "HIGH",
+        "CheckId": "151187cb-0efc-481c-babd-ad24e3c9bc22",
+        "Resource": "aws_security_group.ict-risk-nw02-rdp-open",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Sensitive Port Is Exposed To Entire Network",
+        "Severity": "HIGH",
+        "CheckId": "381c3f2a-ef6f-4eff-99f7-b169cda3422c",
+        "Resource": "aws_security_group.ict-risk-nw02-rdp-open",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Unrestricted Security Group Ingress",
+        "Severity": "HIGH",
+        "CheckId": "4728cd65-a20c-49da-8b31-9c08b423e4db",
+        "Resource": "aws_security_group.ict-risk-nw02-rdp-open",
+        "Occurrences": 1
+      }
+    ],
+    "CheckovUniqueRuleCount": 3,
+    "KicsUniqueRuleCount": 8,
+    "CheckovAllFindingCount": 3,
+    "KicsAllFindingCount": 8,
+    "CheckovNonTargetFindingCount": 2,
+    "KicsNonTargetFindingCount": 5,
+    "CheckovAllFindings": [
+      {
+        "Name": "Ensure that Security Groups are attached to another resource",
+        "Severity": null,
+        "CheckId": "CKV2_AWS_5",
+        "Resource": "aws_security_group.nw02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure every security group and rule has a description",
+        "Severity": null,
+        "CheckId": "CKV_AWS_23",
+        "Resource": "aws_security_group.nw02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure no security groups allow ingress from 0.0.0.0:0 to port 3389",
+        "Severity": null,
+        "CheckId": "CKV_AWS_25",
+        "Resource": "aws_security_group.nw02",
+        "Occurrences": 1
+      }
+    ],
+    "KicsAllFindings": [
+      {
+        "Name": "Remote Desktop Port Open To Internet",
+        "Severity": "HIGH",
+        "CheckId": "151187cb-0efc-481c-babd-ad24e3c9bc22",
+        "Resource": "aws_security_group.ict-risk-nw02-rdp-open",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Sensitive Port Is Exposed To Entire Network",
+        "Severity": "HIGH",
+        "CheckId": "381c3f2a-ef6f-4eff-99f7-b169cda3422c",
+        "Resource": "aws_security_group.ict-risk-nw02-rdp-open",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Unrestricted Security Group Ingress",
+        "Severity": "HIGH",
+        "CheckId": "4728cd65-a20c-49da-8b31-9c08b423e4db",
+        "Resource": "aws_security_group.ict-risk-nw02-rdp-open",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Security Group Not Used",
+        "Severity": "INFO",
+        "CheckId": "4849211b-ac39-479e-ae78-5694d506cb24",
+        "Resource": "aws_security_group.ict-risk-nw02-rdp-open",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Security Group Rule Without Description",
+        "Severity": "INFO",
+        "CheckId": "68eb4bf3-f9bf-463d-b5cf-e029bb446d2e",
+        "Resource": "aws_security_group.nw02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Security Group Without Description",
+        "Severity": "INFO",
+        "CheckId": "cb3f5ed6-0d18-40de-a93d-b3538db31e8c",
+        "Resource": "aws_security_group.ict-risk-nw02-rdp-open",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Resource Not Using Tags",
+        "Severity": "INFO",
+        "CheckId": "e38a8e0a-b88b-4902-b3fe-b0fcb17d5c10",
+        "Resource": "aws_security_group.ict-risk-nw02-rdp-open",
+        "Occurrences": 1
+      },
+      {
+        "Name": "IAM Access Analyzer Not Enabled",
+        "Severity": "LOW",
+        "CheckId": "e592a0c5-5bdb-414c-9066-5dba7cdea370",
+        "Resource": "n/a.n/a",
+        "Occurrences": 1
+      }
+    ],
+    "RiskProfile": {
+      "asset": "aws_security_group.nw02",
+      "exposure_vector": "Public internet access to RDP (port 3389) enabling credential attacks or service exploitation",
+      "cia_impact": "Confidentiality, Integrity, Availability (High)",
+      "remediation": "Restrict ingress cidr_blocks to private network ranges (e.g., 10.0.0.0/8)"
+    }
+  },
+  {
+    "Id": "NW-03",
+    "Type": "vulnerable",
+    "Category": "network-exposure",
+    "File": "benchmark/cases/NW-03-vulnerable.tf",
+    "ExpectedIssue": "all ports and protocols open to 0.0.0.0/0",
+    "StructuralPattern": "wildcard_protocol_port_range",
+    "CheckovStatus": "detected",
+    "KicsStatus": "detected",
+    "CheckovTargetedRuleCount": 4,
+    "KicsTargetedRuleCount": 4,
+    "CheckovTargetedInstanceCount": 4,
+    "KicsTargetedInstanceCount": 129,
+    "CheckovTargetedFindings": [
+      {
+        "Name": "Ensure no security groups allow ingress from 0.0.0.0:0 to port 22",
+        "Severity": null,
+        "CheckId": "CKV_AWS_24",
+        "Resource": "aws_security_group.nw03",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure no security groups allow ingress from 0.0.0.0:0 to port 3389",
+        "Severity": null,
+        "CheckId": "CKV_AWS_25",
+        "Resource": "aws_security_group.nw03",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure no security groups allow ingress from 0.0.0.0:0 to port 80",
+        "Severity": null,
+        "CheckId": "CKV_AWS_260",
+        "Resource": "aws_security_group.nw03",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure no security groups allow ingress from 0.0.0.0:0 to port -1",
+        "Severity": null,
+        "CheckId": "CKV_AWS_277",
+        "Resource": "aws_security_group.nw03",
+        "Occurrences": 1
+      }
+    ],
+    "KicsTargetedFindings": [
+      {
+        "Name": "Remote Desktop Port Open To Internet",
+        "Severity": "HIGH",
+        "CheckId": "151187cb-0efc-481c-babd-ad24e3c9bc22",
+        "Resource": "aws_security_group.ict-risk-nw03-all-ports-open",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Sensitive Port Is Exposed To Entire Network",
+        "Severity": "HIGH",
+        "CheckId": "381c3f2a-ef6f-4eff-99f7-b169cda3422c",
+        "Resource": "aws_security_group.ict-risk-nw03-all-ports-open",
+        "Occurrences": 126
+      },
+      {
+        "Name": "Unrestricted Security Group Ingress",
+        "Severity": "HIGH",
+        "CheckId": "4728cd65-a20c-49da-8b31-9c08b423e4db",
+        "Resource": "aws_security_group.ict-risk-nw03-all-ports-open",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Security Group With Unrestricted Access To SSH",
+        "Severity": "MEDIUM",
+        "CheckId": "65905cec-d691-4320-b320-2000436cb696",
+        "Resource": "aws_security_group.ict-risk-nw03-all-ports-open",
+        "Occurrences": 1
+      }
+    ],
+    "CheckovUniqueRuleCount": 6,
+    "KicsUniqueRuleCount": 12,
+    "CheckovAllFindingCount": 6,
+    "KicsAllFindingCount": 137,
+    "CheckovNonTargetFindingCount": 2,
+    "KicsNonTargetFindingCount": 8,
+    "CheckovAllFindings": [
+      {
+        "Name": "Ensure that Security Groups are attached to another resource",
+        "Severity": null,
+        "CheckId": "CKV2_AWS_5",
+        "Resource": "aws_security_group.nw03",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure every security group and rule has a description",
+        "Severity": null,
+        "CheckId": "CKV_AWS_23",
+        "Resource": "aws_security_group.nw03",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure no security groups allow ingress from 0.0.0.0:0 to port 22",
+        "Severity": null,
+        "CheckId": "CKV_AWS_24",
+        "Resource": "aws_security_group.nw03",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure no security groups allow ingress from 0.0.0.0:0 to port 3389",
+        "Severity": null,
+        "CheckId": "CKV_AWS_25",
+        "Resource": "aws_security_group.nw03",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure no security groups allow ingress from 0.0.0.0:0 to port 80",
+        "Severity": null,
+        "CheckId": "CKV_AWS_260",
+        "Resource": "aws_security_group.nw03",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure no security groups allow ingress from 0.0.0.0:0 to port -1",
+        "Severity": null,
+        "CheckId": "CKV_AWS_277",
+        "Resource": "aws_security_group.nw03",
+        "Occurrences": 1
+      }
+    ],
+    "KicsAllFindings": [
+      {
+        "Name": "Remote Desktop Port Open To Internet",
+        "Severity": "HIGH",
+        "CheckId": "151187cb-0efc-481c-babd-ad24e3c9bc22",
+        "Resource": "aws_security_group.ict-risk-nw03-all-ports-open",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Sensitive Port Is Exposed To Entire Network",
+        "Severity": "HIGH",
+        "CheckId": "381c3f2a-ef6f-4eff-99f7-b169cda3422c",
+        "Resource": "aws_security_group.ict-risk-nw03-all-ports-open",
+        "Occurrences": 126
+      },
+      {
+        "Name": "Unrestricted Security Group Ingress",
+        "Severity": "HIGH",
+        "CheckId": "4728cd65-a20c-49da-8b31-9c08b423e4db",
+        "Resource": "aws_security_group.ict-risk-nw03-all-ports-open",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Security Group Not Used",
+        "Severity": "INFO",
+        "CheckId": "4849211b-ac39-479e-ae78-5694d506cb24",
+        "Resource": "aws_security_group.ict-risk-nw03-all-ports-open",
+        "Occurrences": 1
+      },
+      {
+        "Name": "SQL Analysis Services Port 2383 (TCP) Is Publicly Accessible",
+        "Severity": "MEDIUM",
+        "CheckId": "54c417bf-c762-48b9-9d31-b3d87047e3f0",
+        "Resource": "aws_security_group.ict-risk-nw03-all-ports-open",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Unknown Port Exposed To Internet",
+        "Severity": "HIGH",
+        "CheckId": "590d878b-abdc-428f-895a-e2b68a0e1998",
+        "Resource": "aws_security_group.ict-risk-nw03-all-ports-open",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Security Group With Unrestricted Access To SSH",
+        "Severity": "MEDIUM",
+        "CheckId": "65905cec-d691-4320-b320-2000436cb696",
+        "Resource": "aws_security_group.ict-risk-nw03-all-ports-open",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Security Group Rule Without Description",
+        "Severity": "INFO",
+        "CheckId": "68eb4bf3-f9bf-463d-b5cf-e029bb446d2e",
+        "Resource": "aws_security_group.nw03",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Security Group Without Description",
+        "Severity": "INFO",
+        "CheckId": "cb3f5ed6-0d18-40de-a93d-b3538db31e8c",
+        "Resource": "aws_security_group.ict-risk-nw03-all-ports-open",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Resource Not Using Tags",
+        "Severity": "INFO",
+        "CheckId": "e38a8e0a-b88b-4902-b3fe-b0fcb17d5c10",
+        "Resource": "aws_security_group.ict-risk-nw03-all-ports-open",
+        "Occurrences": 1
+      },
+      {
+        "Name": "IAM Access Analyzer Not Enabled",
+        "Severity": "LOW",
+        "CheckId": "e592a0c5-5bdb-414c-9066-5dba7cdea370",
+        "Resource": "n/a.n/a",
+        "Occurrences": 1
+      },
+      {
+        "Name": "HTTP Port Open To Internet",
+        "Severity": "MEDIUM",
+        "CheckId": "ffac8a12-322e-42c1-b9b9-81ff85c39ef7",
+        "Resource": "aws_security_group.ict-risk-nw03-all-ports-open",
+        "Occurrences": 1
+      }
+    ],
+    "RiskProfile": {
+      "asset": "aws_security_group.nw03",
+      "exposure_vector": "All ports and protocols exposed to 0.0.0.0/0",
+      "cia_impact": "Confidentiality, Integrity, Availability (Critical)",
+      "remediation": "Set protocol to tcp, restrict port to 443, and limit cidr_blocks to 10.0.0.0/8"
+    }
+  },
+  {
+    "Id": "ST-01",
+    "Type": "corrected",
+    "Category": "public-storage",
+    "File": "benchmark/cases/ST-01-fixed.tf",
+    "ExpectedIssue": "no public-access finding",
+    "StructuralPattern": "remediated_companion_block",
+    "CheckovStatus": "clean",
+    "KicsStatus": "clean",
+    "CheckovTargetedRuleCount": 0,
+    "KicsTargetedRuleCount": 0,
+    "CheckovTargetedInstanceCount": 0,
+    "KicsTargetedInstanceCount": 0,
+    "CheckovTargetedFindings": [],
+    "KicsTargetedFindings": [],
+    "CheckovUniqueRuleCount": 6,
+    "KicsUniqueRuleCount": 4,
+    "CheckovAllFindingCount": 6,
+    "KicsAllFindingCount": 4,
+    "CheckovNonTargetFindingCount": 6,
+    "KicsNonTargetFindingCount": 4,
+    "CheckovAllFindings": [
+      {
+        "Name": "Ensure that an S3 bucket has a lifecycle configuration",
+        "Severity": null,
+        "CheckId": "CKV2_AWS_61",
+        "Resource": "aws_s3_bucket.st01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure S3 buckets should have event notifications enabled",
+        "Severity": null,
+        "CheckId": "CKV2_AWS_62",
+        "Resource": "aws_s3_bucket.st01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure that S3 bucket has cross-region replication enabled",
+        "Severity": null,
+        "CheckId": "CKV_AWS_144",
+        "Resource": "aws_s3_bucket.st01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure that S3 buckets are encrypted with KMS by default",
+        "Severity": null,
+        "CheckId": "CKV_AWS_145",
+        "Resource": "aws_s3_bucket.st01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure the S3 bucket has access logging enabled",
+        "Severity": null,
+        "CheckId": "CKV_AWS_18",
+        "Resource": "aws_s3_bucket.st01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure all data stored in the S3 bucket have versioning enabled",
+        "Severity": null,
+        "CheckId": "CKV_AWS_21",
+        "Resource": "aws_s3_bucket.st01",
+        "Occurrences": 1
+      }
+    ],
+    "KicsAllFindings": [
+      {
+        "Name": "S3 Bucket Without Versioning",
+        "Severity": "MEDIUM",
+        "CheckId": "568a4d22-3517-44a6-a7ad-6a7eed88722c",
+        "Resource": "aws_s3_bucket.ict-risk-st01-private-acl",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Resource Not Using Tags",
+        "Severity": "INFO",
+        "CheckId": "e38a8e0a-b88b-4902-b3fe-b0fcb17d5c10",
+        "Resource": "aws_s3_bucket.st01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "IAM Access Analyzer Not Enabled",
+        "Severity": "LOW",
+        "CheckId": "e592a0c5-5bdb-414c-9066-5dba7cdea370",
+        "Resource": "n/a.n/a",
+        "Occurrences": 1
+      },
+      {
+        "Name": "S3 Bucket Logging Disabled",
+        "Severity": "MEDIUM",
+        "CheckId": "f861041c-8c9f-4156-acfc-5e6e524f5884",
+        "Resource": "aws_s3_bucket.ict-risk-st01-private-acl",
+        "Occurrences": 1
+      }
+    ]
+  },
+  {
+    "Id": "ST-02",
+    "Type": "corrected",
+    "Category": "public-storage",
+    "File": "benchmark/cases/ST-02-fixed.tf",
+    "ExpectedIssue": "no public-access finding",
+    "StructuralPattern": "remediated_attribute",
+    "CheckovStatus": "clean",
+    "KicsStatus": "clean",
+    "CheckovTargetedRuleCount": 0,
+    "KicsTargetedRuleCount": 0,
+    "CheckovTargetedInstanceCount": 0,
+    "KicsTargetedInstanceCount": 0,
+    "CheckovTargetedFindings": [],
+    "KicsTargetedFindings": [],
+    "CheckovUniqueRuleCount": 6,
+    "KicsUniqueRuleCount": 4,
+    "CheckovAllFindingCount": 6,
+    "KicsAllFindingCount": 4,
+    "CheckovNonTargetFindingCount": 6,
+    "KicsNonTargetFindingCount": 4,
+    "CheckovAllFindings": [
+      {
+        "Name": "Ensure that an S3 bucket has a lifecycle configuration",
+        "Severity": null,
+        "CheckId": "CKV2_AWS_61",
+        "Resource": "aws_s3_bucket.st02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure S3 buckets should have event notifications enabled",
+        "Severity": null,
+        "CheckId": "CKV2_AWS_62",
+        "Resource": "aws_s3_bucket.st02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure that S3 bucket has cross-region replication enabled",
+        "Severity": null,
+        "CheckId": "CKV_AWS_144",
+        "Resource": "aws_s3_bucket.st02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure that S3 buckets are encrypted with KMS by default",
+        "Severity": null,
+        "CheckId": "CKV_AWS_145",
+        "Resource": "aws_s3_bucket.st02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure the S3 bucket has access logging enabled",
+        "Severity": null,
+        "CheckId": "CKV_AWS_18",
+        "Resource": "aws_s3_bucket.st02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure all data stored in the S3 bucket have versioning enabled",
+        "Severity": null,
+        "CheckId": "CKV_AWS_21",
+        "Resource": "aws_s3_bucket.st02",
+        "Occurrences": 1
+      }
+    ],
+    "KicsAllFindings": [
+      {
+        "Name": "S3 Bucket Without Versioning",
+        "Severity": "MEDIUM",
+        "CheckId": "568a4d22-3517-44a6-a7ad-6a7eed88722c",
+        "Resource": "aws_s3_bucket.ict-risk-st02-public-block-enabled",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Resource Not Using Tags",
+        "Severity": "INFO",
+        "CheckId": "e38a8e0a-b88b-4902-b3fe-b0fcb17d5c10",
+        "Resource": "aws_s3_bucket.st02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "IAM Access Analyzer Not Enabled",
+        "Severity": "LOW",
+        "CheckId": "e592a0c5-5bdb-414c-9066-5dba7cdea370",
+        "Resource": "n/a.n/a",
+        "Occurrences": 1
+      },
+      {
+        "Name": "S3 Bucket Logging Disabled",
+        "Severity": "MEDIUM",
+        "CheckId": "f861041c-8c9f-4156-acfc-5e6e524f5884",
+        "Resource": "aws_s3_bucket.ict-risk-st02-public-block-enabled",
+        "Occurrences": 1
+      }
+    ]
+  },
+  {
+    "Id": "ST-03",
+    "Type": "corrected",
+    "Category": "public-storage",
+    "File": "benchmark/cases/ST-03-fixed.tf",
+    "ExpectedIssue": "no public-access finding",
+    "StructuralPattern": "remediated_policy_removal_and_block",
+    "CheckovStatus": "clean",
+    "KicsStatus": "clean",
+    "CheckovTargetedRuleCount": 0,
+    "KicsTargetedRuleCount": 0,
+    "CheckovTargetedInstanceCount": 0,
+    "KicsTargetedInstanceCount": 0,
+    "CheckovTargetedFindings": [],
+    "KicsTargetedFindings": [],
+    "CheckovUniqueRuleCount": 6,
+    "KicsUniqueRuleCount": 4,
+    "CheckovAllFindingCount": 6,
+    "KicsAllFindingCount": 4,
+    "CheckovNonTargetFindingCount": 6,
+    "KicsNonTargetFindingCount": 4,
+    "CheckovAllFindings": [
+      {
+        "Name": "Ensure that an S3 bucket has a lifecycle configuration",
+        "Severity": null,
+        "CheckId": "CKV2_AWS_61",
+        "Resource": "aws_s3_bucket.st03",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure S3 buckets should have event notifications enabled",
+        "Severity": null,
+        "CheckId": "CKV2_AWS_62",
+        "Resource": "aws_s3_bucket.st03",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure that S3 bucket has cross-region replication enabled",
+        "Severity": null,
+        "CheckId": "CKV_AWS_144",
+        "Resource": "aws_s3_bucket.st03",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure that S3 buckets are encrypted with KMS by default",
+        "Severity": null,
+        "CheckId": "CKV_AWS_145",
+        "Resource": "aws_s3_bucket.st03",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure the S3 bucket has access logging enabled",
+        "Severity": null,
+        "CheckId": "CKV_AWS_18",
+        "Resource": "aws_s3_bucket.st03",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure all data stored in the S3 bucket have versioning enabled",
+        "Severity": null,
+        "CheckId": "CKV_AWS_21",
+        "Resource": "aws_s3_bucket.st03",
+        "Occurrences": 1
+      }
+    ],
+    "KicsAllFindings": [
+      {
+        "Name": "S3 Bucket Without Versioning",
+        "Severity": "MEDIUM",
+        "CheckId": "568a4d22-3517-44a6-a7ad-6a7eed88722c",
+        "Resource": "aws_s3_bucket.ict-risk-st03-private-policy",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Resource Not Using Tags",
+        "Severity": "INFO",
+        "CheckId": "e38a8e0a-b88b-4902-b3fe-b0fcb17d5c10",
+        "Resource": "aws_s3_bucket.st03",
+        "Occurrences": 1
+      },
+      {
+        "Name": "IAM Access Analyzer Not Enabled",
+        "Severity": "LOW",
+        "CheckId": "e592a0c5-5bdb-414c-9066-5dba7cdea370",
+        "Resource": "n/a.n/a",
+        "Occurrences": 1
+      },
+      {
+        "Name": "S3 Bucket Logging Disabled",
+        "Severity": "MEDIUM",
+        "CheckId": "f861041c-8c9f-4156-acfc-5e6e524f5884",
+        "Resource": "aws_s3_bucket.ict-risk-st03-private-policy",
+        "Occurrences": 1
+      }
+    ]
+  },
+  {
+    "Id": "EN-01",
+    "Type": "corrected",
+    "Category": "encryption-at-rest",
+    "File": "benchmark/cases/EN-01-fixed.tf",
+    "ExpectedIssue": "no missing-encryption finding (encrypted with AES256)",
+    "StructuralPattern": "remediated_aes256_companion_resource",
+    "CheckovStatus": "unexpected-targeted-finding",
+    "KicsStatus": "clean",
+    "CheckovTargetedRuleCount": 1,
+    "KicsTargetedRuleCount": 0,
+    "CheckovTargetedInstanceCount": 1,
+    "KicsTargetedInstanceCount": 0,
+    "CheckovTargetedFindings": [
+      {
+        "Name": "Ensure that S3 buckets are encrypted with KMS by default",
+        "Severity": null,
+        "CheckId": "CKV_AWS_145",
+        "Resource": "aws_s3_bucket.en01",
+        "Occurrences": 1
+      }
+    ],
+    "KicsTargetedFindings": [],
+    "CheckovUniqueRuleCount": 7,
+    "KicsUniqueRuleCount": 4,
+    "CheckovAllFindingCount": 7,
+    "KicsAllFindingCount": 4,
+    "CheckovNonTargetFindingCount": 6,
+    "KicsNonTargetFindingCount": 4,
+    "CheckovAllFindings": [
+      {
+        "Name": "Ensure that S3 bucket has a Public Access block",
+        "Severity": null,
+        "CheckId": "CKV2_AWS_6",
+        "Resource": "aws_s3_bucket.en01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure that an S3 bucket has a lifecycle configuration",
+        "Severity": null,
+        "CheckId": "CKV2_AWS_61",
+        "Resource": "aws_s3_bucket.en01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure S3 buckets should have event notifications enabled",
+        "Severity": null,
+        "CheckId": "CKV2_AWS_62",
+        "Resource": "aws_s3_bucket.en01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure that S3 bucket has cross-region replication enabled",
+        "Severity": null,
+        "CheckId": "CKV_AWS_144",
+        "Resource": "aws_s3_bucket.en01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure that S3 buckets are encrypted with KMS by default",
+        "Severity": null,
+        "CheckId": "CKV_AWS_145",
+        "Resource": "aws_s3_bucket.en01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure the S3 bucket has access logging enabled",
+        "Severity": null,
+        "CheckId": "CKV_AWS_18",
+        "Resource": "aws_s3_bucket.en01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure all data stored in the S3 bucket have versioning enabled",
+        "Severity": null,
+        "CheckId": "CKV_AWS_21",
+        "Resource": "aws_s3_bucket.en01",
+        "Occurrences": 1
+      }
+    ],
+    "KicsAllFindings": [
+      {
+        "Name": "S3 Bucket Without Versioning",
+        "Severity": "MEDIUM",
+        "CheckId": "568a4d22-3517-44a6-a7ad-6a7eed88722c",
+        "Resource": "aws_s3_bucket.ict-risk-en01-encrypted",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Resource Not Using Tags",
+        "Severity": "INFO",
+        "CheckId": "e38a8e0a-b88b-4902-b3fe-b0fcb17d5c10",
+        "Resource": "aws_s3_bucket.en01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "IAM Access Analyzer Not Enabled",
+        "Severity": "LOW",
+        "CheckId": "e592a0c5-5bdb-414c-9066-5dba7cdea370",
+        "Resource": "n/a.n/a",
+        "Occurrences": 1
+      },
+      {
+        "Name": "S3 Bucket Logging Disabled",
+        "Severity": "MEDIUM",
+        "CheckId": "f861041c-8c9f-4156-acfc-5e6e524f5884",
+        "Resource": "aws_s3_bucket.ict-risk-en01-encrypted",
+        "Occurrences": 1
+      }
+    ],
+    "DisagreementReason": "Checkov reports a False Positive on EN-01-fixed.tf because rule CKV_AWS_145 requires KMS encryption (aws:kms) and does not accept standard AES256 server-side encryption."
+  },
+  {
+    "Id": "EN-02",
+    "Type": "corrected",
+    "Category": "encryption-at-rest",
+    "File": "benchmark/cases/EN-02-fixed.tf",
+    "ExpectedIssue": "no missing-encryption finding",
+    "StructuralPattern": "remediated_attribute",
+    "CheckovStatus": "clean",
+    "KicsStatus": "clean",
+    "CheckovTargetedRuleCount": 0,
+    "KicsTargetedRuleCount": 0,
+    "CheckovTargetedInstanceCount": 0,
+    "KicsTargetedInstanceCount": 0,
+    "CheckovTargetedFindings": [],
+    "KicsTargetedFindings": [],
+    "CheckovUniqueRuleCount": 1,
+    "KicsUniqueRuleCount": 2,
+    "CheckovAllFindingCount": 1,
+    "KicsAllFindingCount": 2,
+    "CheckovNonTargetFindingCount": 1,
+    "KicsNonTargetFindingCount": 2,
+    "CheckovAllFindings": [
+      {
+        "Name": "Ensure EBS Volume is encrypted by KMS using a customer managed Key (CMK)",
+        "Severity": null,
+        "CheckId": "CKV_AWS_189",
+        "Resource": "aws_ebs_volume.en02",
+        "Occurrences": 1
+      }
+    ],
+    "KicsAllFindings": [
+      {
+        "Name": "Resource Not Using Tags",
+        "Severity": "INFO",
+        "CheckId": "e38a8e0a-b88b-4902-b3fe-b0fcb17d5c10",
+        "Resource": "aws_ebs_volume.en02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "IAM Access Analyzer Not Enabled",
+        "Severity": "LOW",
+        "CheckId": "e592a0c5-5bdb-414c-9066-5dba7cdea370",
+        "Resource": "n/a.n/a",
+        "Occurrences": 1
+      }
+    ]
+  },
+  {
+    "Id": "ID-01",
+    "Type": "corrected",
+    "Category": "identity-permissions",
+    "File": "benchmark/cases/ID-01-fixed.tf",
+    "ExpectedIssue": "no excessive-permission finding",
+    "StructuralPattern": "remediated_least_privilege_policy",
+    "CheckovStatus": "clean",
+    "KicsStatus": "clean",
+    "CheckovTargetedRuleCount": 0,
+    "KicsTargetedRuleCount": 0,
+    "CheckovTargetedInstanceCount": 0,
+    "KicsTargetedInstanceCount": 0,
+    "CheckovTargetedFindings": [],
+    "KicsTargetedFindings": [],
+    "CheckovUniqueRuleCount": 0,
+    "KicsUniqueRuleCount": 2,
+    "CheckovAllFindingCount": 0,
+    "KicsAllFindingCount": 2,
+    "CheckovNonTargetFindingCount": 0,
+    "KicsNonTargetFindingCount": 2,
+    "CheckovAllFindings": [],
+    "KicsAllFindings": [
+      {
+        "Name": "Resource Not Using Tags",
+        "Severity": "INFO",
+        "CheckId": "e38a8e0a-b88b-4902-b3fe-b0fcb17d5c10",
+        "Resource": "aws_iam_policy.ict-risk-id01-scoped",
+        "Occurrences": 1
+      },
+      {
+        "Name": "IAM Access Analyzer Not Enabled",
+        "Severity": "LOW",
+        "CheckId": "e592a0c5-5bdb-414c-9066-5dba7cdea370",
+        "Resource": "n/a.n/a",
+        "Occurrences": 1
+      }
+    ]
+  },
+  {
+    "Id": "ID-02",
+    "Type": "corrected",
+    "Category": "identity-permissions",
+    "File": "benchmark/cases/ID-02-fixed.tf",
+    "ExpectedIssue": "no excessive-permission finding",
+    "StructuralPattern": "remediated_scoped_passrole",
+    "CheckovStatus": "clean",
+    "KicsStatus": "clean",
+    "CheckovTargetedRuleCount": 0,
+    "KicsTargetedRuleCount": 0,
+    "CheckovTargetedInstanceCount": 0,
+    "KicsTargetedInstanceCount": 0,
+    "CheckovTargetedFindings": [],
+    "KicsTargetedFindings": [],
+    "CheckovUniqueRuleCount": 0,
+    "KicsUniqueRuleCount": 2,
+    "CheckovAllFindingCount": 0,
+    "KicsAllFindingCount": 2,
+    "CheckovNonTargetFindingCount": 0,
+    "KicsNonTargetFindingCount": 2,
+    "CheckovAllFindings": [],
+    "KicsAllFindings": [
+      {
+        "Name": "Resource Not Using Tags",
+        "Severity": "INFO",
+        "CheckId": "e38a8e0a-b88b-4902-b3fe-b0fcb17d5c10",
+        "Resource": "aws_iam_policy.ict-risk-id02-passrole-scoped",
+        "Occurrences": 1
+      },
+      {
+        "Name": "IAM Access Analyzer Not Enabled",
+        "Severity": "LOW",
+        "CheckId": "e592a0c5-5bdb-414c-9066-5dba7cdea370",
+        "Resource": "n/a.n/a",
+        "Occurrences": 1
+      }
+    ]
+  },
+  {
+    "Id": "NW-01",
+    "Type": "corrected",
+    "Category": "network-exposure",
+    "File": "benchmark/cases/NW-01-fixed.tf",
+    "ExpectedIssue": "no unrestricted-ingress finding",
+    "StructuralPattern": "remediated_private_cidr",
+    "CheckovStatus": "clean",
+    "KicsStatus": "clean",
+    "CheckovTargetedRuleCount": 0,
+    "KicsTargetedRuleCount": 0,
+    "CheckovTargetedInstanceCount": 0,
+    "KicsTargetedInstanceCount": 0,
+    "CheckovTargetedFindings": [],
+    "KicsTargetedFindings": [],
+    "CheckovUniqueRuleCount": 2,
+    "KicsUniqueRuleCount": 6,
+    "CheckovAllFindingCount": 2,
+    "KicsAllFindingCount": 6,
+    "CheckovNonTargetFindingCount": 2,
+    "KicsNonTargetFindingCount": 6,
+    "CheckovAllFindings": [
+      {
+        "Name": "Ensure that Security Groups are attached to another resource",
+        "Severity": null,
+        "CheckId": "CKV2_AWS_5",
+        "Resource": "aws_security_group.nw01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure every security group and rule has a description",
+        "Severity": null,
+        "CheckId": "CKV_AWS_23",
+        "Resource": "aws_security_group.nw01",
+        "Occurrences": 1
+      }
+    ],
+    "KicsAllFindings": [
+      {
+        "Name": "Security Group Not Used",
+        "Severity": "INFO",
+        "CheckId": "4849211b-ac39-479e-ae78-5694d506cb24",
+        "Resource": "aws_security_group.ict-risk-nw01-ssh-private",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Security Group Rule Without Description",
+        "Severity": "INFO",
+        "CheckId": "68eb4bf3-f9bf-463d-b5cf-e029bb446d2e",
+        "Resource": "aws_security_group.nw01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Sensitive Port Is Exposed To Wide Private Network",
+        "Severity": "LOW",
+        "CheckId": "92fe237e-074c-4262-81a4-2077acb928c1",
+        "Resource": "aws_security_group.ict-risk-nw01-ssh-private",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Security Group Without Description",
+        "Severity": "INFO",
+        "CheckId": "cb3f5ed6-0d18-40de-a93d-b3538db31e8c",
+        "Resource": "aws_security_group.ict-risk-nw01-ssh-private",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Resource Not Using Tags",
+        "Severity": "INFO",
+        "CheckId": "e38a8e0a-b88b-4902-b3fe-b0fcb17d5c10",
+        "Resource": "aws_security_group.ict-risk-nw01-ssh-private",
+        "Occurrences": 1
+      },
+      {
+        "Name": "IAM Access Analyzer Not Enabled",
+        "Severity": "LOW",
+        "CheckId": "e592a0c5-5bdb-414c-9066-5dba7cdea370",
+        "Resource": "n/a.n/a",
+        "Occurrences": 1
+      }
+    ]
+  },
+  {
+    "Id": "NW-02",
+    "Type": "corrected",
+    "Category": "network-exposure",
+    "File": "benchmark/cases/NW-02-fixed.tf",
+    "ExpectedIssue": "no unrestricted-ingress finding",
+    "StructuralPattern": "remediated_private_cidr",
+    "CheckovStatus": "clean",
+    "KicsStatus": "clean",
+    "CheckovTargetedRuleCount": 0,
+    "KicsTargetedRuleCount": 0,
+    "CheckovTargetedInstanceCount": 0,
+    "KicsTargetedInstanceCount": 0,
+    "CheckovTargetedFindings": [],
+    "KicsTargetedFindings": [],
+    "CheckovUniqueRuleCount": 2,
+    "KicsUniqueRuleCount": 6,
+    "CheckovAllFindingCount": 2,
+    "KicsAllFindingCount": 6,
+    "CheckovNonTargetFindingCount": 2,
+    "KicsNonTargetFindingCount": 6,
+    "CheckovAllFindings": [
+      {
+        "Name": "Ensure that Security Groups are attached to another resource",
+        "Severity": null,
+        "CheckId": "CKV2_AWS_5",
+        "Resource": "aws_security_group.nw02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure every security group and rule has a description",
+        "Severity": null,
+        "CheckId": "CKV_AWS_23",
+        "Resource": "aws_security_group.nw02",
+        "Occurrences": 1
+      }
+    ],
+    "KicsAllFindings": [
+      {
+        "Name": "Security Group Not Used",
+        "Severity": "INFO",
+        "CheckId": "4849211b-ac39-479e-ae78-5694d506cb24",
+        "Resource": "aws_security_group.ict-risk-nw02-rdp-private",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Security Group Rule Without Description",
+        "Severity": "INFO",
+        "CheckId": "68eb4bf3-f9bf-463d-b5cf-e029bb446d2e",
+        "Resource": "aws_security_group.nw02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Sensitive Port Is Exposed To Wide Private Network",
+        "Severity": "LOW",
+        "CheckId": "92fe237e-074c-4262-81a4-2077acb928c1",
+        "Resource": "aws_security_group.ict-risk-nw02-rdp-private",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Security Group Without Description",
+        "Severity": "INFO",
+        "CheckId": "cb3f5ed6-0d18-40de-a93d-b3538db31e8c",
+        "Resource": "aws_security_group.ict-risk-nw02-rdp-private",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Resource Not Using Tags",
+        "Severity": "INFO",
+        "CheckId": "e38a8e0a-b88b-4902-b3fe-b0fcb17d5c10",
+        "Resource": "aws_security_group.ict-risk-nw02-rdp-private",
+        "Occurrences": 1
+      },
+      {
+        "Name": "IAM Access Analyzer Not Enabled",
+        "Severity": "LOW",
+        "CheckId": "e592a0c5-5bdb-414c-9066-5dba7cdea370",
+        "Resource": "n/a.n/a",
+        "Occurrences": 1
+      }
+    ]
+  },
+  {
+    "Id": "NW-03",
+    "Type": "corrected",
+    "Category": "network-exposure",
+    "File": "benchmark/cases/NW-03-fixed.tf",
+    "ExpectedIssue": "no unrestricted-ingress finding",
+    "StructuralPattern": "remediated_port_and_private_cidr",
+    "CheckovStatus": "clean",
+    "KicsStatus": "clean",
+    "CheckovTargetedRuleCount": 0,
+    "KicsTargetedRuleCount": 0,
+    "CheckovTargetedInstanceCount": 0,
+    "KicsTargetedInstanceCount": 0,
+    "CheckovTargetedFindings": [],
+    "KicsTargetedFindings": [],
+    "CheckovUniqueRuleCount": 2,
+    "KicsUniqueRuleCount": 6,
+    "CheckovAllFindingCount": 2,
+    "KicsAllFindingCount": 6,
+    "CheckovNonTargetFindingCount": 2,
+    "KicsNonTargetFindingCount": 6,
+    "CheckovAllFindings": [
+      {
+        "Name": "Ensure that Security Groups are attached to another resource",
+        "Severity": null,
+        "CheckId": "CKV2_AWS_5",
+        "Resource": "aws_security_group.nw03",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure every security group and rule has a description",
+        "Severity": null,
+        "CheckId": "CKV_AWS_23",
+        "Resource": "aws_security_group.nw03",
+        "Occurrences": 1
+      }
+    ],
+    "KicsAllFindings": [
+      {
+        "Name": "Security Group Not Used",
+        "Severity": "INFO",
+        "CheckId": "4849211b-ac39-479e-ae78-5694d506cb24",
+        "Resource": "aws_security_group.ict-risk-nw03-private-https",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Security Group Rule Without Description",
+        "Severity": "INFO",
+        "CheckId": "68eb4bf3-f9bf-463d-b5cf-e029bb446d2e",
+        "Resource": "aws_security_group.nw03",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Sensitive Port Is Exposed To Wide Private Network",
+        "Severity": "LOW",
+        "CheckId": "92fe237e-074c-4262-81a4-2077acb928c1",
+        "Resource": "aws_security_group.ict-risk-nw03-private-https",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Security Group Without Description",
+        "Severity": "INFO",
+        "CheckId": "cb3f5ed6-0d18-40de-a93d-b3538db31e8c",
+        "Resource": "aws_security_group.ict-risk-nw03-private-https",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Resource Not Using Tags",
+        "Severity": "INFO",
+        "CheckId": "e38a8e0a-b88b-4902-b3fe-b0fcb17d5c10",
+        "Resource": "aws_security_group.ict-risk-nw03-private-https",
+        "Occurrences": 1
+      },
+      {
+        "Name": "IAM Access Analyzer Not Enabled",
+        "Severity": "LOW",
+        "CheckId": "e592a0c5-5bdb-414c-9066-5dba7cdea370",
+        "Resource": "n/a.n/a",
+        "Occurrences": 1
+      }
+    ]
+  },
+  {
+    "Id": "BC-01",
+    "Type": "benign",
+    "Category": "public-storage",
+    "File": "benchmark/cases/BC-01.tf",
+    "ExpectedIssue": "no public-storage finding on benign control",
+    "StructuralPattern": "benign_control_baseline",
+    "CheckovStatus": "clean",
+    "KicsStatus": "clean",
+    "CheckovTargetedRuleCount": 0,
+    "KicsTargetedRuleCount": 0,
+    "CheckovTargetedInstanceCount": 0,
+    "KicsTargetedInstanceCount": 0,
+    "CheckovTargetedFindings": [],
+    "KicsTargetedFindings": [],
+    "CheckovUniqueRuleCount": 6,
+    "KicsUniqueRuleCount": 4,
+    "CheckovAllFindingCount": 6,
+    "KicsAllFindingCount": 4,
+    "CheckovNonTargetFindingCount": 6,
+    "KicsNonTargetFindingCount": 4,
+    "CheckovAllFindings": [
+      {
+        "Name": "Ensure that an S3 bucket has a lifecycle configuration",
+        "Severity": null,
+        "CheckId": "CKV2_AWS_61",
+        "Resource": "aws_s3_bucket.bc01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure S3 buckets should have event notifications enabled",
+        "Severity": null,
+        "CheckId": "CKV2_AWS_62",
+        "Resource": "aws_s3_bucket.bc01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure that S3 bucket has cross-region replication enabled",
+        "Severity": null,
+        "CheckId": "CKV_AWS_144",
+        "Resource": "aws_s3_bucket.bc01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure that S3 buckets are encrypted with KMS by default",
+        "Severity": null,
+        "CheckId": "CKV_AWS_145",
+        "Resource": "aws_s3_bucket.bc01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure the S3 bucket has access logging enabled",
+        "Severity": null,
+        "CheckId": "CKV_AWS_18",
+        "Resource": "aws_s3_bucket.bc01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure all data stored in the S3 bucket have versioning enabled",
+        "Severity": null,
+        "CheckId": "CKV_AWS_21",
+        "Resource": "aws_s3_bucket.bc01",
+        "Occurrences": 1
+      }
+    ],
+    "KicsAllFindings": [
+      {
+        "Name": "S3 Bucket Without Versioning",
+        "Severity": "MEDIUM",
+        "CheckId": "568a4d22-3517-44a6-a7ad-6a7eed88722c",
+        "Resource": "aws_s3_bucket.ict-risk-bc01-private",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Resource Not Using Tags",
+        "Severity": "INFO",
+        "CheckId": "e38a8e0a-b88b-4902-b3fe-b0fcb17d5c10",
+        "Resource": "aws_s3_bucket.bc01",
+        "Occurrences": 1
+      },
+      {
+        "Name": "IAM Access Analyzer Not Enabled",
+        "Severity": "LOW",
+        "CheckId": "e592a0c5-5bdb-414c-9066-5dba7cdea370",
+        "Resource": "n/a.n/a",
+        "Occurrences": 1
+      },
+      {
+        "Name": "S3 Bucket Logging Disabled",
+        "Severity": "MEDIUM",
+        "CheckId": "f861041c-8c9f-4156-acfc-5e6e524f5884",
+        "Resource": "aws_s3_bucket.ict-risk-bc01-private",
+        "Occurrences": 1
+      }
+    ]
+  },
+  {
+    "Id": "BC-02",
+    "Type": "benign",
+    "Category": "encryption-at-rest",
+    "File": "benchmark/cases/BC-02.tf",
+    "ExpectedIssue": "no missing-encryption finding on benign control",
+    "StructuralPattern": "benign_control_baseline",
+    "CheckovStatus": "clean",
+    "KicsStatus": "clean",
+    "CheckovTargetedRuleCount": 0,
+    "KicsTargetedRuleCount": 0,
+    "CheckovTargetedInstanceCount": 0,
+    "KicsTargetedInstanceCount": 0,
+    "CheckovTargetedFindings": [],
+    "KicsTargetedFindings": [],
+    "CheckovUniqueRuleCount": 1,
+    "KicsUniqueRuleCount": 2,
+    "CheckovAllFindingCount": 1,
+    "KicsAllFindingCount": 2,
+    "CheckovNonTargetFindingCount": 1,
+    "KicsNonTargetFindingCount": 2,
+    "CheckovAllFindings": [
+      {
+        "Name": "Ensure EBS Volume is encrypted by KMS using a customer managed Key (CMK)",
+        "Severity": null,
+        "CheckId": "CKV_AWS_189",
+        "Resource": "aws_ebs_volume.bc02",
+        "Occurrences": 1
+      }
+    ],
+    "KicsAllFindings": [
+      {
+        "Name": "Resource Not Using Tags",
+        "Severity": "INFO",
+        "CheckId": "e38a8e0a-b88b-4902-b3fe-b0fcb17d5c10",
+        "Resource": "aws_ebs_volume.bc02",
+        "Occurrences": 1
+      },
+      {
+        "Name": "IAM Access Analyzer Not Enabled",
+        "Severity": "LOW",
+        "CheckId": "e592a0c5-5bdb-414c-9066-5dba7cdea370",
+        "Resource": "n/a.n/a",
+        "Occurrences": 1
+      }
+    ]
+  },
+  {
+    "Id": "BC-03",
+    "Type": "benign",
+    "Category": "identity-permissions",
+    "File": "benchmark/cases/BC-03.tf",
+    "ExpectedIssue": "no excessive-permission finding on benign control",
+    "StructuralPattern": "benign_control_baseline",
+    "CheckovStatus": "clean",
+    "KicsStatus": "clean",
+    "CheckovTargetedRuleCount": 0,
+    "KicsTargetedRuleCount": 0,
+    "CheckovTargetedInstanceCount": 0,
+    "KicsTargetedInstanceCount": 0,
+    "CheckovTargetedFindings": [],
+    "KicsTargetedFindings": [],
+    "CheckovUniqueRuleCount": 0,
+    "KicsUniqueRuleCount": 2,
+    "CheckovAllFindingCount": 0,
+    "KicsAllFindingCount": 2,
+    "CheckovNonTargetFindingCount": 0,
+    "KicsNonTargetFindingCount": 2,
+    "CheckovAllFindings": [],
+    "KicsAllFindings": [
+      {
+        "Name": "Resource Not Using Tags",
+        "Severity": "INFO",
+        "CheckId": "e38a8e0a-b88b-4902-b3fe-b0fcb17d5c10",
+        "Resource": "aws_iam_policy.ict-risk-bc03-least-privilege",
+        "Occurrences": 1
+      },
+      {
+        "Name": "IAM Access Analyzer Not Enabled",
+        "Severity": "LOW",
+        "CheckId": "e592a0c5-5bdb-414c-9066-5dba7cdea370",
+        "Resource": "n/a.n/a",
+        "Occurrences": 1
+      }
+    ]
+  },
+  {
+    "Id": "BC-04",
+    "Type": "benign",
+    "Category": "network-exposure",
+    "File": "benchmark/cases/BC-04.tf",
+    "ExpectedIssue": "no unrestricted-ingress finding on benign control",
+    "StructuralPattern": "benign_control_baseline",
+    "CheckovStatus": "clean",
+    "KicsStatus": "clean",
+    "CheckovTargetedRuleCount": 0,
+    "KicsTargetedRuleCount": 0,
+    "CheckovTargetedInstanceCount": 0,
+    "KicsTargetedInstanceCount": 0,
+    "CheckovTargetedFindings": [],
+    "KicsTargetedFindings": [],
+    "CheckovUniqueRuleCount": 2,
+    "KicsUniqueRuleCount": 6,
+    "CheckovAllFindingCount": 2,
+    "KicsAllFindingCount": 6,
+    "CheckovNonTargetFindingCount": 2,
+    "KicsNonTargetFindingCount": 6,
+    "CheckovAllFindings": [
+      {
+        "Name": "Ensure that Security Groups are attached to another resource",
+        "Severity": null,
+        "CheckId": "CKV2_AWS_5",
+        "Resource": "aws_security_group.bc04",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Ensure every security group and rule has a description",
+        "Severity": null,
+        "CheckId": "CKV_AWS_23",
+        "Resource": "aws_security_group.bc04",
+        "Occurrences": 1
+      }
+    ],
+    "KicsAllFindings": [
+      {
+        "Name": "Security Group Not Used",
+        "Severity": "INFO",
+        "CheckId": "4849211b-ac39-479e-ae78-5694d506cb24",
+        "Resource": "aws_security_group.ict-risk-bc04-private",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Security Group Rule Without Description",
+        "Severity": "INFO",
+        "CheckId": "68eb4bf3-f9bf-463d-b5cf-e029bb446d2e",
+        "Resource": "aws_security_group.bc04",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Sensitive Port Is Exposed To Wide Private Network",
+        "Severity": "LOW",
+        "CheckId": "92fe237e-074c-4262-81a4-2077acb928c1",
+        "Resource": "aws_security_group.ict-risk-bc04-private",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Security Group Without Description",
+        "Severity": "INFO",
+        "CheckId": "cb3f5ed6-0d18-40de-a93d-b3538db31e8c",
+        "Resource": "aws_security_group.ict-risk-bc04-private",
+        "Occurrences": 1
+      },
+      {
+        "Name": "Resource Not Using Tags",
+        "Severity": "INFO",
+        "CheckId": "e38a8e0a-b88b-4902-b3fe-b0fcb17d5c10",
+        "Resource": "aws_security_group.ict-risk-bc04-private",
+        "Occurrences": 1
+      },
+      {
+        "Name": "IAM Access Analyzer Not Enabled",
+        "Severity": "LOW",
+        "CheckId": "e592a0c5-5bdb-414c-9066-5dba7cdea370",
+        "Resource": "n/a.n/a",
+        "Occurrences": 1
+      }
+    ]
+  }
+]

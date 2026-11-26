@@ -1,0 +1,154 @@
+{
+  "Metrics": [
+    {
+      "Tool": "Checkov",
+      "TruePositives": 10,
+      "FalseNegatives": 0,
+      "TrueNegatives": 13,
+      "FalsePositives": 1,
+      "VulnerableDetected": 10,
+      "VulnerableTotal": 10,
+      "VulnerableUnmatched": 0,
+      "DetectionCoverage": 1.0,
+      "Recall": 1.0,
+      "BenchmarkTargetPrecision": 0.9091,
+      "F1Score": 0.9524,
+      "FalsePositiveRate": 0.0714,
+      "FalseNegativeRate": 0.0,
+      "CorrectedClean": 9,
+      "CorrectedTotal": 10,
+      "BenignClean": 4,
+      "BenignTotal": 4,
+      "UnexpectedCorrectedFindings": 1,
+      "UnexpectedBenignFindings": 0,
+      "TotalFindingInstancesAcrossDataset": 100,
+      "TotalUniqueRuleTriggersAcrossDataset": 100,
+      "TargetedFindingInstancesOnVulnerable": 28,
+      "TargetedUniqueRulesOnVulnerable": 28,
+      "BackgroundNoiseFindingInstances": 71,
+      "BackgroundNoiseUniqueRules": 71,
+      "SignalToNoiseRatioInstances": 0.28,
+      "SignalToNoiseRatioUniqueRules": 0.28,
+      "TotalScanSeconds": 276.299,
+      "AvgSecondsPerFile": 11.512
+    },
+    {
+      "Tool": "KICS",
+      "TruePositives": 8,
+      "FalseNegatives": 2,
+      "TrueNegatives": 14,
+      "FalsePositives": 0,
+      "VulnerableDetected": 8,
+      "VulnerableTotal": 10,
+      "VulnerableUnmatched": 2,
+      "DetectionCoverage": 0.8,
+      "Recall": 0.8,
+      "BenchmarkTargetPrecision": 1.0,
+      "F1Score": 0.8889,
+      "FalsePositiveRate": 0.0,
+      "FalseNegativeRate": 0.2,
+      "CorrectedClean": 10,
+      "CorrectedTotal": 10,
+      "BenignClean": 4,
+      "BenignTotal": 4,
+      "UnexpectedCorrectedFindings": 0,
+      "UnexpectedBenignFindings": 0,
+      "TotalFindingInstancesAcrossDataset": 241,
+      "TotalUniqueRuleTriggersAcrossDataset": 116,
+      "TargetedFindingInstancesOnVulnerable": 145,
+      "TargetedUniqueRulesOnVulnerable": 20,
+      "BackgroundNoiseFindingInstances": 96,
+      "BackgroundNoiseUniqueRules": 96,
+      "SignalToNoiseRatioInstances": 0.6017,
+      "SignalToNoiseRatioUniqueRules": 0.1724,
+      "TotalScanSeconds": 189.335,
+      "AvgSecondsPerFile": 7.889
+    }
+  ],
+  "CategoryBreakdown": [
+    {
+      "Category": "public-storage",
+      "VulnerableCases": 3,
+      "CheckovDetected": 3,
+      "CheckovRecall": 1.0,
+      "CheckovFalsePositives": 0,
+      "KicsDetected": 3,
+      "KicsRecall": 1.0,
+      "KicsFalsePositives": 0
+    },
+    {
+      "Category": "encryption-at-rest",
+      "VulnerableCases": 2,
+      "CheckovDetected": 2,
+      "CheckovRecall": 1.0,
+      "CheckovFalsePositives": 1,
+      "KicsDetected": 1,
+      "KicsRecall": 0.5,
+      "KicsFalsePositives": 0
+    },
+    {
+      "Category": "identity-permissions",
+      "VulnerableCases": 2,
+      "CheckovDetected": 2,
+      "CheckovRecall": 1.0,
+      "CheckovFalsePositives": 0,
+      "KicsDetected": 1,
+      "KicsRecall": 0.5,
+      "KicsFalsePositives": 0
+    },
+    {
+      "Category": "network-exposure",
+      "VulnerableCases": 3,
+      "CheckovDetected": 3,
+      "CheckovRecall": 1.0,
+      "CheckovFalsePositives": 0,
+      "KicsDetected": 3,
+      "KicsRecall": 1.0,
+      "KicsFalsePositives": 0
+    }
+  ],
+  "KicsSeverityCounts": [
+    {
+      "Tool": "KICS",
+      "Severity": "CRITICAL",
+      "TargetedUniqueRuleCount": 2,
+      "TargetedInstanceCount": 2,
+      "AllDatasetInstanceCount": 2
+    },
+    {
+      "Tool": "KICS",
+      "Severity": "HIGH",
+      "TargetedUniqueRuleCount": 11,
+      "TargetedInstanceCount": 136,
+      "AllDatasetInstanceCount": 137
+    },
+    {
+      "Tool": "KICS",
+      "Severity": "MEDIUM",
+      "TargetedUniqueRuleCount": 7,
+      "TargetedInstanceCount": 7,
+      "AllDatasetInstanceCount": 28
+    },
+    {
+      "Tool": "KICS",
+      "Severity": "LOW",
+      "TargetedUniqueRuleCount": 0,
+      "TargetedInstanceCount": 0,
+      "AllDatasetInstanceCount": 29
+    },
+    {
+      "Tool": "KICS",
+      "Severity": "INFO",
+      "TargetedUniqueRuleCount": 0,
+      "TargetedInstanceCount": 0,
+      "AllDatasetInstanceCount": 45
+    }
+  ],
+  "ExecutionMetadata": {
+    "generated_at": "2026-11-22T18:51:09Z",
+    "cases_path": "benchmark/cases",
+    "terraform_files": 24,
+    "checkov_seconds_total": 276.299,
+    "kics_seconds_total": 189.335
+  }
+}
